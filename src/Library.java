@@ -32,5 +32,5 @@ public class Library {
     public String getAddress() {
         return address;
     }
-    
+
 }
