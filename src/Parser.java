@@ -9,7 +9,7 @@ public class Parser {
         String[] args = command[1].split("\\|");
         switch (command[0]) {
             case "add-library":
-                addLibrary(args[0], args[1], args[2], Integer.parseInt(args[3]), args[4]);
+                addLibrary(args[0],args[1],args[2], args[3], args[4], Integer.parseInt(args[5]), args[6]);
                 break;
             case "add-category":
                 addCategory(args[0], args[1], args[2]);
@@ -26,9 +26,9 @@ public class Parser {
         }
     }
 
-    public void addLibrary(String id, String name, String year, int numDesk, String address) {
+    public void addLibrary(String adminId,String adminPass,String id, String name, String year, int numDesk, String address) {
         Library library = new Library(id, name, year, numDesk, address);
-        System.out.println(center.addLibrary(library));
+        System.out.println(center.addLibrary(adminId,adminPass,library));
     }
 
     public void addCategory(String id, String name, String parentId) {

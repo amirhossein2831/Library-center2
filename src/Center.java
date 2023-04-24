@@ -12,13 +12,16 @@ public class Center {
         admin = new Admin("admin", "AdminPass", "AmirHossein", "Motaghian", "000000000", "19", "Tehran,AUT");
         users = new HashMap<>();
     }
-
-    public HashMap<String, Library> getLibraries() {
-        return libraries;
-    }
-    //TODO this need more condition about the admin
-    public String addLibrary(Library library) {
-        if (libraries.get(library.getId()) != null) {
+    public String addLibrary(String adminId, String adminPass, Library library) {
+        User admin = users.get(adminId);
+        if (admin == null) {
+            return "not-found";
+        } else if (!(admin instanceof Admin)) {
+            return "permission-denied";
+        }
+        if (!((Admin) admin).getPass().equals(adminPass)) {
+            return "invalid-pass";
+        }if (libraries.get(library.getId()) != null) {
             return "duplicate-id";
         }
         libraries.put(library.getId(), library);
