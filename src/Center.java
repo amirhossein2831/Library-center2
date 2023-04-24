@@ -3,10 +3,12 @@ import java.util.HashMap;
 public class Center {
     private HashMap<String, Library> libraries;
     private HashMap<String, Category> categories;
+    private Admin admin;
 
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
+        admin = new Admin("admin", "AdminPass", "AmirHossein", "Motaghian", "000000000", "19", "Tehran,AUT");
     }
 
     public HashMap<String, Library> getLibraries() {
