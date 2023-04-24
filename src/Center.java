@@ -30,28 +30,51 @@ public class Center {
         if (answer != null) {
             return answer;
         }
+        if (categories.get(category.getParentId()) == null) {
+            return "nou-found";
+        }
         if (categories.get(category.getId()) != null) {
             return "duplicate-id";
         }
         categories.put(category.getId(), category);
         return "success";
     }
-    public String addStudent(Student student) {
+    public String addStudent(String adminId,String adminPass,Student student) {
+        User admin = users.get(adminId);
+        String answer = this.admin.isAdmin(admin, adminPass);
+        if (answer != null) {
+            return answer;
+        }
         if (users.get(student.getId()) != null) {
             return "duplicate-id";
         }
         users.put(student.getId(), student);
         return "success";
     }
-    //TODO this need more condition about the admin
-    public String addStaff(Staff staff) {
+    public String addStaff(String adminId,String adminPass,Staff staff) {
+        User admin = users.get(adminId);
+        String answer = this.admin.isAdmin(admin, adminPass);
+        if (answer != null) {
+            return answer;
+        }
         if (users.get(staff.getId()) != null) {
             return "duplicate-id";
         }
         users.put(staff.getId(), staff);
         return "success";
     }
-    //TODO this need more condition about the admin
+    public String addProfessor(String adminId, String adminPass, Professor professor) {
+        User admin = users.get(adminId);
+        String answer = this.admin.isAdmin(admin, adminPass);
+        if (answer != null) {
+            return answer;
+        }
+        if (users.get(professor.getId()) != null) {
+            return "duplicate-id";
+        }
+        users.put(professor.getId(), professor);
+        return "success";
+    }
     public String addManager(Manager manager) {
         if (users.get(manager.getId()) != null) {
             return "duplicate-id";
