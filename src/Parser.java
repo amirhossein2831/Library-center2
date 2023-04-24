@@ -20,6 +20,9 @@ public class Parser {
             case "add-staff":
                 addStaff(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
                 break;
+            case "add-manager":
+                addManager(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
+                break;
         }
     }
 
@@ -39,10 +42,15 @@ public class Parser {
         System.out.println(center.addStudent(student));
 
     }
-
     public void addStaff(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         Staff staff = new Staff(id, pass, firstName, lastName, nationalId, year, address);
         System.out.println(center.addStaff(staff));
+    }
+
+    public void addManager(String id, String pass, String firstName, String lastName, String nationalId, String year, String address, String libraryId) {
+        Manager manager = new Manager(id, pass, firstName, lastName, nationalId, year, address, libraryId);
+        System.out.println(center.addManager(manager));
+
     }
 }
 
