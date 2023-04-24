@@ -48,4 +48,12 @@ public class Center {
         users.put(staff.getId(), staff);
         return "success";
     }
+    //TODO this need more condition about the admin
+    public String addManager(Manager manager) {
+        if (users.get(manager.getId()) != null) {
+            return "duplicate-id";
+        }
+        users.put(manager.getId(), manager);
+        return "success";
+    }
 }
