@@ -14,14 +14,11 @@ public class Center {
     }
     public String addLibrary(String adminId, String adminPass, Library library) {
         User admin = users.get(adminId);
-        if (admin == null) {
-            return "not-found";
-        } else if (!(admin instanceof Admin)) {
-            return "permission-denied";
+        String answer = this.admin.isAdmin(admin, adminPass);
+        if (answer != null) {
+            return answer;
         }
-        if (!((Admin) admin).getPass().equals(adminPass)) {
-            return "invalid-pass";
-        }if (libraries.get(library.getId()) != null) {
+        if (libraries.get(library.getId()) != null) {
             return "duplicate-id";
         }
         libraries.put(library.getId(), library);

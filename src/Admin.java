@@ -1,7 +1,8 @@
 public class Admin extends User {
     private String id;
     private String pass;
-    public Admin( String id, String pass,String firstName, String lastName, String nationalId, String year, String address) {
+
+    public Admin(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         super(firstName, lastName, nationalId, year, address);
         this.id = id;
         this.pass = pass;
@@ -13,5 +14,17 @@ public class Admin extends User {
 
     public String getPass() {
         return pass;
+    }
+
+    public String isAdmin(User admin, String adminPass) {
+        if (admin == null) {
+            return "not-found";
+        } else if (!(admin instanceof Admin)) {
+            return "permission-denied";
+        }
+        if (!((Admin) admin).getPass().equals(adminPass)) {
+            return "invalid-pass";
+        }
+        return null;
     }
 }
