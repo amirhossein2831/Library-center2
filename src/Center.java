@@ -90,4 +90,17 @@ public class Center {
         users.put(manager.getId(), manager);
         return "success";
     }
+    //TODO need another condition to check user have any book or not
+    public String removeUser(String adminId, String adminPass, String id) {
+        User admin = users.get(adminId);
+        String answer = this.admin.isAdmin(admin, adminPass);
+        if (answer != null) {
+            return answer;
+        }
+        if (users.get(id) == null) {
+            return "not-found";
+        }
+        users.remove(id);
+        return "success";
+    }
 }

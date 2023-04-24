@@ -23,6 +23,8 @@ public class Parser {
             case "add-manager":
                 addManager(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
                 break;
+            case "remove-user":
+                removeUser(args[0], args[1], args[2]);
         }
     }
 
@@ -59,6 +61,10 @@ public class Parser {
         Manager manager = new Manager(id, pass, firstName, lastName, nationalId, year, address, libraryId);
         System.out.println(center.addManager(adminId,adminPass,manager));
 
+    }
+
+    public void removeUser(String adminId, String adminPass, String id) {
+        System.out.println(center.removeUser(adminId, adminPass, id));
     }
 }
 
