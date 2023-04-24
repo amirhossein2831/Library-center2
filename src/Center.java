@@ -40,4 +40,12 @@ public class Center {
         users.put(student.getId(), student);
         return "success";
     }
+    //TODO this need more condition about the admin
+    public String addStaff(Staff staff) {
+        if (users.get(staff.getId()) != null) {
+            return "duplicate-id";
+        }
+        users.put(staff.getId(), staff);
+        return "success";
+    }
 }
