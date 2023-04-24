@@ -12,7 +12,7 @@ public class Parser {
                 addLibrary(args[0],args[1],args[2], args[3], args[4], Integer.parseInt(args[5]), args[6]);
                 break;
             case "add-category":
-                addCategory(args[0], args[1], args[2]);
+                addCategory(args[0],args[1],args[2], args[3], args[4]);
                 break;
             case "add-student":
                 addStudent(args[0],args[1],args[2],args[3],args[4],args[5],args[6]);
@@ -31,9 +31,9 @@ public class Parser {
         System.out.println(center.addLibrary(adminId,adminPass,library));
     }
 
-    public void addCategory(String id, String name, String parentId) {
+    public void addCategory(String adminId,String adminPass,String id, String name, String parentId) {
         Category category = new Category(id, name, parentId);
-        System.out.println(center.addCategory(category));
+        System.out.println(center.addCategory(adminId,adminPass,category));
 
     }
 

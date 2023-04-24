@@ -24,15 +24,18 @@ public class Center {
         libraries.put(library.getId(), library);
         return "success";
     }
-    //TODO this need more condition about the admin
-    public String addCategory(Category category) {
+    public String addCategory(String adminId,String adminPass,Category category) {
+        User admin = users.get(adminId);
+        String answer = this.admin.isAdmin(admin, adminPass);
+        if (answer != null) {
+            return answer;
+        }
         if (categories.get(category.getId()) != null) {
             return "duplicate-id";
         }
         categories.put(category.getId(), category);
         return "success";
     }
-    //TODO this need more condition about the admin
     public String addStudent(Student student) {
         if (users.get(student.getId()) != null) {
             return "duplicate-id";
