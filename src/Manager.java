@@ -9,4 +9,16 @@ public class Manager extends User {
         this.pass = pass;
         this.libraryId = libraryId;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public String getLibraryId() {
+        return libraryId;
+    }
 }
