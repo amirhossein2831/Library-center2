@@ -75,7 +75,12 @@ public class Center {
         users.put(professor.getId(), professor);
         return "success";
     }
-    public String addManager(Manager manager) {
+    public String addManager(String adminId,String adminPass,Manager manager) {
+        User admin = users.get(adminId);
+        String answer = this.admin.isAdmin(admin, adminPass);
+        if (answer != null) {
+            return answer;
+        }
         if (users.get(manager.getId()) != null) {
             return "duplicate-id";
         }

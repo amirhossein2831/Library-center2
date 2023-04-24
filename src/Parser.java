@@ -21,7 +21,7 @@ public class Parser {
                 addStaff(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
                 break;
             case "add-manager":
-                addManager(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
+                addManager(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
                 break;
         }
     }
@@ -54,9 +54,10 @@ public class Parser {
         System.out.println(center.addProfessor(adminId, adminPass, professor));
     }
 
-    public void addManager(String id, String pass, String firstName, String lastName, String nationalId, String year, String address, String libraryId) {
+    public void addManager(String adminId,String adminPass,String id, String pass, String firstName,
+                           String lastName, String nationalId, String year, String address, String libraryId) {
         Manager manager = new Manager(id, pass, firstName, lastName, nationalId, year, address, libraryId);
-        System.out.println(center.addManager(manager));
+        System.out.println(center.addManager(adminId,adminPass,manager));
 
     }
 }
