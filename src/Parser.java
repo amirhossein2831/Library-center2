@@ -64,7 +64,7 @@ public class Parser {
     }
 
     public void removeUser(String adminId, String adminPass, String id) {
-        System.out.println(center.removeUser(id));
+        System.out.println(center.removeUser(adminId, adminPass, id));
     }
 }
 
