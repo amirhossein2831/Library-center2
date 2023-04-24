@@ -53,6 +53,9 @@ public class Center {
         if (users.get(manager.getId()) != null) {
             return "duplicate-id";
         }
+        if (libraries.get(manager.getLibraryId()) == null) {
+            return "not-found";
+        }
         users.put(manager.getId(), manager);
         return "success";
     }
