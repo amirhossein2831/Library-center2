@@ -41,7 +41,7 @@ public class Parser {
 
     public void addStudent(String adminId,String adminPass,String id,String pass,String firstName,String lastName,String nationalId,String year,String address) {
         Student student = new Student(id, pass, firstName, lastName, nationalId, year, address);
-        System.out.println(center.addStudent(adminId,adminPass,student));
+        System.out.println(center.addUser(adminId,adminPass,student));
 
     }
 
@@ -49,17 +49,17 @@ public class Parser {
                          String lastName, String nationalId, String year, String address, String type) {
         if (type.equals("staff")) {
             Staff staff = new Staff(id, pass, firstName, lastName, nationalId, year, address);
-            System.out.println(center.addStaff(adminId,adminPass,staff));
+            System.out.println(center.addUser(adminId,adminPass,staff));
             return;
         }
         Professor professor = new Professor(id, pass, firstName, lastName, nationalId, year, address);
-        System.out.println(center.addProfessor(adminId, adminPass, professor));
+        System.out.println(center.addUser(adminId, adminPass, professor));
     }
 
     public void addManager(String adminId,String adminPass,String id, String pass, String firstName,
                            String lastName, String nationalId, String year, String address, String libraryId) {
         Manager manager = new Manager(id, pass, firstName, lastName, nationalId, year, address, libraryId);
-        System.out.println(center.addManager(adminId,adminPass,manager));
+        System.out.println(center.addUser(adminId,adminPass,manager));
 
     }
 

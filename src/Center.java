@@ -39,48 +39,50 @@ public class Center {
         categories.put(category.getId(), category);
         return "success";
     }
-    public String addStudent(String adminId,String adminPass,Student student) {
+
+    public String addUser(String adminId, String adminPass, User user) {
         User admin = users.get(adminId);
         String answer = this.admin.isAdmin(admin, adminPass);
         if (answer != null) {
             return answer;
         }
+        if (user instanceof Student) {
+            Student student = (Student) user;
+            return addStudent(student);
+
+        } else if (user instanceof Staff) {
+            Staff staff = (Staff) user;
+            return addStaff(staff);
+
+        } else if (user instanceof Professor) {
+            Professor professor = (Professor) user;
+            return addProfessor(professor);
+        }
+        Manager manager = (Manager) user;
+        return addManager(manager);
+    }
+    public String addStudent(Student student) {
         if (users.get(student.getId()) != null) {
             return "duplicate-id";
         }
         users.put(student.getId(), student);
         return "success";
     }
-    public String addStaff(String adminId,String adminPass,Staff staff) {
-        User admin = users.get(adminId);
-        String answer = this.admin.isAdmin(admin, adminPass);
-        if (answer != null) {
-            return answer;
-        }
+    public String addStaff(Staff staff) {
         if (users.get(staff.getId()) != null) {
             return "duplicate-id";
         }
         users.put(staff.getId(), staff);
         return "success";
     }
-    public String addProfessor(String adminId, String adminPass, Professor professor) {
-        User admin = users.get(adminId);
-        String answer = this.admin.isAdmin(admin, adminPass);
-        if (answer != null) {
-            return answer;
-        }
+    public String addProfessor( Professor professor) {
         if (users.get(professor.getId()) != null) {
             return "duplicate-id";
         }
         users.put(professor.getId(), professor);
         return "success";
     }
-    public String addManager(String adminId,String adminPass,Manager manager) {
-        User admin = users.get(adminId);
-        String answer = this.admin.isAdmin(admin, adminPass);
-        if (answer != null) {
-            return answer;
-        }
+    public String addManager(Manager manager) {
         if (users.get(manager.getId()) != null) {
             return "duplicate-id";
         }
