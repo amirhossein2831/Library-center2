@@ -4,17 +4,17 @@ public class Center {
     private HashMap<String, Library> libraries;
     private HashMap<String, Category> categories;
     private HashMap<String, User> users;
-    private Admin admin;
 
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
-        admin = new Admin("admin", "AdminPass", "AmirHossein", "Motaghian", "000000000", "19", "Tehran,AUT");
+        Admin admin = new Admin("admin", "AdminPass", "AmirHossein", "Motaghian", "000000000", "19", "Tehran,AUT");
+        users.put(admin.getId(), admin);
         users = new HashMap<>();
     }
     public String addLibrary(String adminId, String adminPass, Library library) {
         User admin = users.get(adminId);
-        String answer = this.admin.isAdmin(admin, adminPass);
+        String answer = isAdmin(admin, adminPass);
         if (answer != null) {
             return answer;
         }
@@ -26,7 +26,7 @@ public class Center {
     }
     public String addCategory(String adminId,String adminPass,Category category) {
         User admin = users.get(adminId);
-        String answer = this.admin.isAdmin(admin, adminPass);
+        String answer = isAdmin(admin, adminPass);
         if (answer != null) {
             return answer;
         }
@@ -41,7 +41,7 @@ public class Center {
     }
     public String addUser(String adminId, String adminPass, User user) {
         User admin = users.get(adminId);
-        String answer = this.admin.isAdmin(admin, adminPass);
+        String answer = isAdmin(admin, adminPass);
         if (answer != null) {
             return answer;
         }
@@ -94,7 +94,7 @@ public class Center {
     //TODO need another condition to check user have any book or not
     public String removeUser(String adminId, String adminPass, String id) {
         User admin = users.get(adminId);
-        String answer = this.admin.isAdmin(admin, adminPass);
+        String answer = isAdmin(admin, adminPass);
         if (answer != null) {
             return answer;
         }
@@ -104,4 +104,59 @@ public class Center {
         users.remove(id);
         return "success";
     }
+
+    public String addResource(String managerId, String managerPass, Resource resource) {
+        User manager = users.get(managerId);
+        String answer = isManager(manager, managerPass, resource.getLibraryId());
+        if (answer != null) {
+            return answer;
+        }
+        if (resource instanceof Book) {
+            Book book = (Book) resource;
+            return addBook(book);
+        }
+
+    }
+
+    public String addBook(Book book) {
+        Library library = libraries.get(book.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        if (library.getResources().get(book.getId()) != null) {
+            return "duplicate-id";
+        }
+        if (categories.get(book.getCategoryId()) == null) {
+            return "not-found";
+        }
+        library.getResources().put(book.getId(), book);
+        return "success";
+    }
+    public String isManager(User manager, String managerPass,String libraryId) {
+        if (manager == null) {
+            return "not-found";
+        } else if (!(manager instanceof Manager)) {
+            return "permission-denied";
+        }
+        if (!((Manager) manager).getPass().equals(managerPass)) {
+            return "invalid-pass";
+        }
+        if (!((Manager) manager).getLibraryId().equals(libraryId)) {
+            return "permission-denied";
+        }
+        return null;
+    }
+
+    public String isAdmin(User admin, String adminPass) {
+        if (admin == null) {
+            return "not-found";
+        } else if (!(admin instanceof Admin)) {
+            return "permission-denied";
+        }
+        if (!((Admin) admin).getPass().equals(adminPass)) {
+            return "invalid-pass";
+        }
+        return null;
+    }
+
 }
