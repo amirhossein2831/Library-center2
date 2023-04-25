@@ -38,7 +38,8 @@ public class Parser {
             case "add-selling-book":
                 addSellingBook(args[0], args[1], args[2], args[3], args[4], args[5], args[6], Integer.parseInt(args[7]), args[8], args[9], args[10], args[11]);
                 break;
-
+            case "remove-resource":
+                removeResource(args[0], args[1], args[2], args[3]);
         }
     }
 
@@ -99,6 +100,10 @@ public class Parser {
              String price, String discount, String categoryId, String libraryId) {
         SellingBook sellingBook = new SellingBook(id, subject, authorName, categoryId, libraryId, publisher, number, year, price, discount);
         System.out.println(center.addResource(managerId, managerPass, sellingBook));
+    }
+
+    public void removeResource(String managerId, String managerPass, String resourceId, String libraryId) {
+        System.out.println(center.removeResource(managerId, managerPass, resourceId, libraryId));
     }
 }
 
