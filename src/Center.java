@@ -39,7 +39,6 @@ public class Center {
         categories.put(category.getId(), category);
         return "success";
     }
-
     public String addUser(String adminId, String adminPass, User user) {
         User admin = users.get(adminId);
         String answer = this.admin.isAdmin(admin, adminPass);
@@ -61,28 +60,28 @@ public class Center {
         Manager manager = (Manager) user;
         return addManager(manager);
     }
-    public String addStudent(Student student) {
+    private String addStudent(Student student) {
         if (users.get(student.getId()) != null) {
             return "duplicate-id";
         }
         users.put(student.getId(), student);
         return "success";
     }
-    public String addStaff(Staff staff) {
+    private String addStaff(Staff staff) {
         if (users.get(staff.getId()) != null) {
             return "duplicate-id";
         }
         users.put(staff.getId(), staff);
         return "success";
     }
-    public String addProfessor( Professor professor) {
+    private String addProfessor( Professor professor) {
         if (users.get(professor.getId()) != null) {
             return "duplicate-id";
         }
         users.put(professor.getId(), professor);
         return "success";
     }
-    public String addManager(Manager manager) {
+    private String addManager(Manager manager) {
         if (users.get(manager.getId()) != null) {
             return "duplicate-id";
         }

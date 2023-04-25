@@ -42,9 +42,7 @@ public class Parser {
     public void addStudent(String adminId,String adminPass,String id,String pass,String firstName,String lastName,String nationalId,String year,String address) {
         Student student = new Student(id, pass, firstName, lastName, nationalId, year, address);
         System.out.println(center.addUser(adminId,adminPass,student));
-
     }
-
     public void addStaff(String adminId, String adminPass, String id, String pass, String firstName,
                          String lastName, String nationalId, String year, String address, String type) {
         if (type.equals("staff")) {
