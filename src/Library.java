@@ -1,9 +1,12 @@
+import java.util.HashMap;
+
 public class Library {
     private String id;
     private String name;
     private String year;
     private int numDesk;
     private String address;
+    private HashMap<String, Resource> resources;
 
     public Library(String id, String name, String year, int numDesk, String address) {
         this.id = id;
@@ -11,6 +14,7 @@ public class Library {
         this.year = year;
         this.numDesk = numDesk;
         this.address = address;
+        resources = new HashMap<>();
     }
 
     public String getId() {
@@ -33,4 +37,7 @@ public class Library {
         return address;
     }
 
+    public HashMap<String, Resource> getResources() {
+        return resources;
+    }
 }
