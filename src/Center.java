@@ -104,7 +104,22 @@ public class Center {
         users.remove(id);
         return "success";
     }
-    
+
+
+    public String addBook(Book book) {
+        Library library = libraries.get(book.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        if (library.getResources().get(book.getId()) != null) {
+            return "duplicate-id";
+        }
+        if (categories.get(book.getCategoryId()) == null) {
+            return "not-found";
+        }
+        library.getResources().put(book.getId(), book);
+        return "success";
+    }
     public String isManager(User manager, String managerPass,String libraryId) {
         if (manager == null) {
             return "not-found";
