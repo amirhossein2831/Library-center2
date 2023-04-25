@@ -114,6 +114,9 @@ public class Center {
         if (resource instanceof Book) {
             Book book = (Book) resource;
             return addBook(book);
+        } else if (resource instanceof Thesis) {
+            Thesis thesis = (Thesis) resource;
+            return addThesis(thesis);
         }
 
     }
@@ -132,6 +135,7 @@ public class Center {
         library.getResources().put(book.getId(), book);
         return "success";
     }
+    
     public String isManager(User manager, String managerPass,String libraryId) {
         if (manager == null) {
             return "not-found";
