@@ -1,12 +1,12 @@
 import java.util.HashMap;
 
 public class Library {
-    private String id;
-    private String name;
-    private String year;
-    private int numDesk;
-    private String address;
-    private HashMap<String, Resource> resources;
+    private final String id;
+    private final String name;
+    private final String year;
+    private final int numDesk;
+    private final String address;
+    private final HashMap<String, Resource> resources;
 
     public Library(String id, String name, String year, int numDesk, String address) {
         this.id = id;
