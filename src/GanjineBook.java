@@ -1,6 +1,6 @@
 public class GanjineBook extends Resource {
-    private String publisher;
-    private String donor;
+    private final String publisher;
+    private final String donor;
 
     public GanjineBook(String id, String subject, String authorName, String categoryId, String libraryId, String publisher, String donor) {
         super(id, subject, authorName, categoryId, libraryId);

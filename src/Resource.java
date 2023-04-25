@@ -1,9 +1,9 @@
 public class Resource {
-    private String id;
-    private String subject;
-    private String authorName;
-    private String categoryId;
-    private String libraryId;
+    private final String id;
+    private final String subject;
+    private final String authorName;
+    private final String categoryId;
+    private final String libraryId;
 
     public Resource(String id, String subject, String authorName, String categoryId, String libraryId) {
         this.id = id;

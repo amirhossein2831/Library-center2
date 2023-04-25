@@ -1,6 +1,6 @@
 public class Thesis extends Resource {
-    private String advisor;
-    private String defYear;
+    private final String advisor;
+    private final String defYear;
 
     public Thesis(String id, String subject, String authorName, String categoryId, String libraryId, String advisor, String defYear) {
         super(id, subject, authorName, categoryId, libraryId);
