@@ -135,7 +135,22 @@ public class Center {
         library.getResources().put(book.getId(), book);
         return "success";
     }
-    
+
+    public String addThesis(Thesis thesis) {
+        Library library = libraries.get(thesis.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        if (library.getResources().get(thesis.getId()) != null) {
+            return "duplicate-id";
+        }
+        if (categories.get(thesis.getCategoryId()) == null) {
+            return "not-found";
+        }
+        library.getResources().put(thesis.getId(), thesis);
+        return "success";
+    }
+
     public String isManager(User manager, String managerPass,String libraryId) {
         if (manager == null) {
             return "not-found";
