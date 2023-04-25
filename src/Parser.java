@@ -38,7 +38,7 @@ public class Parser {
             case "add-selling-book":
                 addSellingBook(args[0], args[1], args[2], args[3], args[4], args[5], args[6], Integer.parseInt(args[7]), args[8], args[9], args[10], args[11]);
                 break;
-            
+
         }
     }
 
@@ -96,7 +96,7 @@ public class Parser {
     }
 
     public void addSellingBook(String managerId, String managerPass, String id, String subject, String authorName, String publisher, String year, int number,
-            , String price, String discount, String categoryId, String libraryId) {
+             String price, String discount, String categoryId, String libraryId) {
         SellingBook sellingBook = new SellingBook(id, subject, authorName, categoryId, libraryId, publisher, number, year, price, discount);
         System.out.println(center.addResource(managerId, managerPass, sellingBook));
     }
