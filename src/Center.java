@@ -105,6 +105,18 @@ public class Center {
         return "success";
     }
 
+    public String addResource(String managerId, String managerPass, Resource resource) {
+        User manager = users.get(managerId);
+        String answer = isManager(manager, managerPass, resource.getLibraryId());
+        if (answer != null) {
+            return answer;
+        }
+        if (resource instanceof Book) {
+            Book book = (Book) resource;
+            return addBook(book);
+        }
+
+    }
 
     public String addBook(Book book) {
         Library library = libraries.get(book.getLibraryId());
