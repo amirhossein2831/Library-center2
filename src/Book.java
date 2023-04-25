@@ -1,9 +1,9 @@
 public class Book extends Resource {
     private String publisher;
     private int number;
-    private int year;
+    private String year;
 
-    public Book(String id, String subject, String authorName, String categoryId, String libraryId, String publisher, int number, int year) {
+    public Book(String id, String subject, String authorName, String categoryId, String libraryId, String publisher, int number, String year) {
         super(id, subject, authorName, categoryId, libraryId);
         this.publisher = publisher;
         this.number = number;
@@ -18,7 +18,7 @@ public class Book extends Resource {
         return number;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 }
