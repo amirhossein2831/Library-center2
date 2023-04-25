@@ -105,6 +105,21 @@ public class Center {
         return "success";
     }
     
+    public String isManager(User manager, String managerPass,String libraryId) {
+        if (manager == null) {
+            return "not-found";
+        } else if (!(manager instanceof Manager)) {
+            return "permission-denied";
+        }
+        if (!((Manager) manager).getPass().equals(managerPass)) {
+            return "invalid-pass";
+        }
+        if (!((Manager) manager).getLibraryId().equals(libraryId)) {
+            return "permission-denied";
+        }
+        return null;
+    }
+
     public String isAdmin(User admin, String adminPass) {
         if (admin == null) {
             return "not-found";
