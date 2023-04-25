@@ -45,27 +45,24 @@ public class Center {
         if (answer != null) {
             return answer;
         }
-        if (user instanceof Manager) {
-            Manager manager = (Manager) user;
-            return addManager(manager);
-        }
         return checkUser(user);
     }
     private String checkUser(User user) {
+        if (user instanceof Manager) {
+            Manager manager = (Manager) user;
+            if (users.get(manager.getId()) != null) {
+                return "duplicate-id";
+            }
+            if (libraries.get(manager.getLibraryId()) == null) {
+                return "not-found";
+            }
+            users.put(manager.getId(), manager);
+            return "success";
+        }
         if (users.get(user.getId()) != null) {
             return "duplicate-id";
         }
         users.put(user.getId(), user);
-        return "success";
-    }
-    private String addManager(Manager manager) {
-        if (users.get(manager.getId()) != null) {
-            return "duplicate-id";
-        }
-        if (libraries.get(manager.getLibraryId()) == null) {
-            return "not-found";
-        }
-        users.put(manager.getId(), manager);
         return "success";
     }
     //TODO need another condition to check user have any book or not
