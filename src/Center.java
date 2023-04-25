@@ -45,40 +45,17 @@ public class Center {
         if (answer != null) {
             return answer;
         }
-        if (user instanceof Student) {
-            Student student = (Student) user;
-            return addStudent(student);
-
-        } else if (user instanceof Staff) {
-            Staff staff = (Staff) user;
-            return addStaff(staff);
-
-        } else if (user instanceof Professor) {
-            Professor professor = (Professor) user;
-            return addProfessor(professor);
+        if (user instanceof Manager) {
+            Manager manager = (Manager) user;
+            return addManager(manager);
         }
-        Manager manager = (Manager) user;
-        return addManager(manager);
+        return checkUser(user);
     }
-    private String addStudent(Student student) {
-        if (users.get(student.getId()) != null) {
+    private String checkUser(User user) {
+        if (users.get(user.getId()) != null) {
             return "duplicate-id";
         }
-        users.put(student.getId(), student);
-        return "success";
-    }
-    private String addStaff(Staff staff) {
-        if (users.get(staff.getId()) != null) {
-            return "duplicate-id";
-        }
-        users.put(staff.getId(), staff);
-        return "success";
-    }
-    private String addProfessor( Professor professor) {
-        if (users.get(professor.getId()) != null) {
-            return "duplicate-id";
-        }
-        users.put(professor.getId(), professor);
+        users.put(user.getId(), user);
         return "success";
     }
     private String addManager(Manager manager) {
