@@ -32,6 +32,9 @@ public class Parser {
             case "add-thesis":
                 addThesis(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
                 break;
+            case "add-ganjineh-book":
+                addGanjine();
+                break;
         }
     }
 
@@ -71,8 +74,8 @@ public class Parser {
         System.out.println(center.removeUser(adminId, adminPass, id));
     }
 
-    public void addBook(String managerId,String managerPass,String id,String subject,String authorName,String publisher,String year,int number
-    ,String categoryId,String libraryId) {
+    public void addBook(String managerId,String managerPass,String id,String subject,String authorName,String publisher,String year,int number,
+                        String categoryId,String libraryId) {
         Book book = new Book(id, subject, authorName, categoryId, libraryId, publisher, number, year);
         System.out.println(center.addResource(managerId, managerPass, book));
     }
@@ -81,6 +84,11 @@ public class Parser {
             , String categoryId, String libraryId) {
         Thesis thesis = new Thesis(id, subject, authorName, categoryId, libraryId, advisor, defYear);
         System.out.println(center.addResource(managerId, managerPass, thesis));
+    }
+    public void addGanjine(String managerId,String managerPass,String id,String subject,String authorName,String publisher,String year,
+                           String donor,String categoryId,String libraryId) {
+        GanjineBook ganjineBook = new GanjineBook(id, subject, authorName, categoryId, libraryId, publisher, donor);
+        System.out.println(center.addResource(managerId, managerPass, ganjineBook));
     }
 }
 
