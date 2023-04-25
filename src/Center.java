@@ -111,25 +111,21 @@ public class Center {
         if (answer != null) {
             return answer;
         }
-        if (resource instanceof Book) {
-            Book book = (Book) resource;
-            return addBook(book);
-        }
-
+        return checkResource(resource);
     }
 
-    public String addBook(Book book) {
-        Library library = libraries.get(book.getLibraryId());
+    public String checkResource(Resource resource) {
+        Library library = libraries.get(resource.getLibraryId());
         if (library == null) {
             return "not-found";
         }
-        if (library.getResources().get(book.getId()) != null) {
+        if (library.getResources().get(resource.getId()) != null) {
             return "duplicate-id";
         }
-        if (categories.get(book.getCategoryId()) == null) {
+        if (categories.get(resource.getCategoryId()) == null) {
             return "not-found";
         }
-        library.getResources().put(book.getId(), book);
+        library.getResources().put(resource.getId(), resource);
         return "success";
     }
     public String isManager(User manager, String managerPass,String libraryId) {
