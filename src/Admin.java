@@ -15,16 +15,4 @@ public class Admin extends User {
     public String getPass() {
         return pass;
     }
-
-    public String isAdmin(User admin, String adminPass) {
-        if (admin == null) {
-            return "not-found";
-        } else if (!(admin instanceof Admin)) {
-            return "permission-denied";
-        }
-        if (!((Admin) admin).getPass().equals(adminPass)) {
-            return "invalid-pass";
-        }
-        return null;
-    }
 }

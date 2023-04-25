@@ -25,6 +25,9 @@ public class Parser {
                 break;
             case "remove-user":
                 removeUser(args[0], args[1], args[2]);
+                break;
+            case "add-book":
+                addBook(args[0], args[1], args[2], args[3], args[4], args[5], args[6],Integer.parseInt(args[7]), args[8], args[9]);
         }
     }
 
@@ -60,9 +63,14 @@ public class Parser {
         System.out.println(center.addUser(adminId,adminPass,manager));
 
     }
-
     public void removeUser(String adminId, String adminPass, String id) {
         System.out.println(center.removeUser(adminId, adminPass, id));
+    }
+
+    public void addBook(String managerId,String managerPass,String id,String subject,String authorName,String publisher,String year,int number
+    ,String categoryId,String libraryId) {
+        Book book = new Book(id, subject, authorName, categoryId, libraryId, publisher, number, year);
+        System.out.println(center.addResource(managerId, managerPass, book));
     }
 }
 
