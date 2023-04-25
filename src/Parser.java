@@ -28,6 +28,10 @@ public class Parser {
                 break;
             case "add-book":
                 addBook(args[0], args[1], args[2], args[3], args[4], args[5], args[6],Integer.parseInt(args[7]), args[8], args[9]);
+                break;
+            case "add-thesis":
+                addThesis(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
+                break;
         }
     }
 
@@ -71,6 +75,12 @@ public class Parser {
     ,String categoryId,String libraryId) {
         Book book = new Book(id, subject, authorName, categoryId, libraryId, publisher, number, year);
         System.out.println(center.addResource(managerId, managerPass, book));
+    }
+
+    public void addThesis(String managerId, String managerPass, String id, String subject, String authorName, String advisor, String defYear
+            , String categoryId, String libraryId) {
+        Thesis thesis = new Thesis(id, subject, authorName, categoryId, libraryId, advisor, defYear);
+        System.out.println(center.addResource(managerId, managerPass, thesis));
     }
 }
 
