@@ -142,7 +142,23 @@ public class Center {
         }
         return null;
     }
-
+    //TODO need another condition to be checked
+    public String removeResource(String managerId, String managerPass, String resourceID, String libraryId) {
+        User manager = users.get(managerId);
+        String answer = isManager(manager, managerPass,libraryId);
+        if (answer != null) {
+            return answer;
+        }
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        if (library.getResources().get(resourceID) == null) {
+            return "not-found";
+        }
+        library.getResources().remove(resourceID);
+        return "success";
+    }
     public String isAdmin(User admin, String adminPass) {
         if (admin == null) {
             return "not-found";
