@@ -174,6 +174,17 @@ public class Center {
         }
         return count;
     }
-    
+
+    public boolean checkIsBorrowed(String resourceId, String userID) {
+        for (Library library : libraries.values()) {
+            ArrayList<Borrow> borrows = library.getBorrows().get(resourceId);
+            for (Borrow borrow : borrows) {
+                if (borrow.getUserId().equals(userID)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }
