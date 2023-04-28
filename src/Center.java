@@ -167,5 +167,13 @@ public class Center {
         }
         return count;
     }
+    public int numBorrowedOfBook(String resourceId) {
+        int count = 0;
+        for (Library library : libraries.values()) {
+            count += library.getBorrows().get(resourceId).size();
+        }
+        return count;
+    }
     
+
 }
