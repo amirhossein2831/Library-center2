@@ -7,6 +7,7 @@ public class Library {
     private final int numDesk;
     private final String address;
     private final HashMap<String, Resource> resources;
+    private HashMap<String, Borrow> borrows;
 
     public Library(String id, String name, String year, int numDesk, String address) {
         this.id = id;
@@ -15,6 +16,7 @@ public class Library {
         this.numDesk = numDesk;
         this.address = address;
         resources = new HashMap<>();
+        borrows = new HashMap<>();
     }
 
     public String getId() {
@@ -37,7 +39,12 @@ public class Library {
         return address;
     }
 
+
     public HashMap<String, Resource> getResources() {
         return resources;
+    }
+
+    public HashMap<String, Borrow> getBorrows() {
+        return borrows;
     }
 }

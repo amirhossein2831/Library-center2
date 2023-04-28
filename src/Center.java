@@ -5,6 +5,7 @@ public class Center {
     private final HashMap<String, Category> categories;
     private HashMap<String, User> users;
 
+
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
@@ -152,5 +153,4 @@ public class Center {
         }
         return null;
     }
-
 }

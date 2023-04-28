@@ -11,7 +11,7 @@ public class Parser {
         center = new Center();
     }
 
-    public void parsCommand(String input) {
+    public void parsCommand(String input) throws ParseException {
         String[] command = input.split("#");
         String[] args = command[1].split("\\|");
         switch (command[0]) {
