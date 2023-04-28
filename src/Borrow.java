@@ -1,19 +1,43 @@
+import javax.xml.crypto.Data;
+import java.util.HashMap;
+
 public class Borrow {
     private String userId;
     private String resourceId;
     private String libraryId;
     private String userType;
     private String resourceType;
+    private Data date;
 
-    public Borrow(String userId, String resourceId, String libraryId, String userType, String resourceType) {
+    public Borrow(String userId, String resourceId, String libraryId,Data date) {
         this.userId = userId;
         this.resourceId = resourceId;
         this.libraryId = libraryId;
-        this.userType = userType;
-        this.resourceType = resourceType;
+        this.date = date;
     }
 
-    public String getUserId() { 
+    public void evaluateUserType(HashMap<String, User> users) {
+        User user = users.get(getUserId());
+
+        if (user instanceof Staff) {
+            setUserType("staff");
+        } else if (user instanceof Professor) {
+            setUserType("professor");
+        } else if (user instanceof Student) {
+            setUserType("student");
+        }
+    }
+
+    public void evaluateResourceType(HashMap<String, Resource> resources) {
+        Resource resource = resources.get(getUserId());
+        if (resource instanceof Book) {
+            setResourceType("book");
+        } else if (resource instanceof Thesis) {
+            setResourceType("thesis");
+        }
+    }
+
+    public String getUserId() {
         return userId;
     }
 
@@ -31,5 +55,17 @@ public class Borrow {
 
     public String getResourceType() {
         return resourceType;
+    }
+
+    public Data getDate() {
+        return date;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
     }
 }
