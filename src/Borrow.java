@@ -1,4 +1,5 @@
 import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Borrow {
@@ -7,9 +8,9 @@ public class Borrow {
     private String libraryId;
     private String userType;
     private String resourceType;
-    private Data date;
+    private Date date;
 
-    public Borrow(String userId, String resourceId, String libraryId,Data date) {
+    public Borrow(String userId, String resourceId, String libraryId,Date date) {
         this.userId = userId;
         this.resourceId = resourceId;
         this.libraryId = libraryId;
@@ -57,7 +58,7 @@ public class Borrow {
         return resourceType;
     }
 
-    public Data getDate() {
+    public Date getDate() {
         return date;
     }
 

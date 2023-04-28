@@ -1,3 +1,9 @@
+import javax.xml.crypto.Data;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.SimpleFormatter;
+
 public class Parser {
     private final Center center;
 
@@ -41,6 +47,10 @@ public class Parser {
                 break;
             case "remove-resource":
                 removeResource(args[0], args[1], args[2], args[3]);
+                break;
+            case "Borrow":
+                Borrow(args[0], args[1], args[2], args[3], args[4], args[5]);
+                break;
         }
     }
 
@@ -102,6 +112,12 @@ public class Parser {
 
     public void removeResource(String managerId, String managerPass, String resourceId, String libraryId) {
         System.out.println(center.removeResource(managerId, managerPass, resourceId, libraryId));
+    }
+
+    public void Borrow(String userId, String userPass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
+        Borrow borrow = new Borrow(userId, resourceId, libraryId, date);
+        System.out.println(center.Borrow(borrow, userPass));
     }
 }
 
