@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Center {
@@ -153,19 +154,18 @@ public class Center {
         }
         return null;
     }
-
-    public int numBorrowed(String resourceId) {
+    public int numBorrowedBYUser(String userID) {
         int count = 0;
         for (Library library : libraries.values()) {
-            for (Borrow borrow : library.getBorrows().values()) {
-                if (borrow.getResourceId().equals(resourceId)) {
-                    count++;
+            for (ArrayList<Borrow> borrows: library.getBorrows().values()) {
+                for (Borrow borrow : borrows) {
+                    if (borrow.getUserId().equals(userID)) {
+                        count++;
+                    }
                 }
             }
         }
         return count;
     }
-
-
-
+    
 }
