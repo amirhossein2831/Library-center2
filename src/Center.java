@@ -153,4 +153,19 @@ public class Center {
         }
         return null;
     }
+
+    public int numBorrowed(String resourceId) {
+        int count = 0;
+        for (Library library : libraries.values()) {
+            for (Borrow borrow : library.getBorrows().values()) {
+                if (borrow.getResourceId().equals(resourceId)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
+
 }
