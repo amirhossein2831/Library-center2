@@ -34,8 +34,8 @@ public class Center {
         if (answer != null) {
             return answer;
         }
-        if (categories.get(category.getParentId()) == null) {
-            return "nou-found";
+        if (!category.getParentId().equals("null") && categories.get(category.getParentId()) == null) {
+            return "not-found";
         }
         if (categories.get(category.getId()) != null) {
             return "duplicate-id";
@@ -95,7 +95,7 @@ public class Center {
         return checkResource(resource);
     }
 
-    public String checkResource(Resource resource) {
+    private String checkResource(Resource resource) {
         Library library = libraries.get(resource.getLibraryId());
         if (library == null) {
             return "not-found";
@@ -103,7 +103,7 @@ public class Center {
         if (library.getResources().get(resource.getId()) != null) {
             return "duplicate-id";
         }
-        if (categories.get(resource.getCategoryId()) == null) {
+        if (!resource.getCategoryId().equals("null") && categories.get(resource.getCategoryId()) == null) {
             return "not-found";
         }
         library.getResources().put(resource.getId(), resource);
@@ -127,7 +127,7 @@ public class Center {
         return "success";
     }
 
-    public String isManager(User manager, String managerPass, String libraryId) {
+    private String isManager(User manager, String managerPass, String libraryId) {
         if (manager == null) {
             return "not-found";
         } else if (!(manager instanceof Manager)) {
@@ -136,6 +136,9 @@ public class Center {
         if (!manager.getPass().equals(managerPass)) {
             return "invalid-pass";
         }
+        if (libraries.get(libraryId) == null) {
+            return "not-found";
+        }
         if (!((Manager) manager).getLibraryId().equals(libraryId)) {
             return "permission-denied";
         }
@@ -143,7 +146,7 @@ public class Center {
     }
 
     //TODO need another condition to be checked
-    public String isAdmin(User admin, String adminPass) {
+    private String isAdmin(User admin, String adminPass) {
         if (admin == null) {
             return "not-found";
         } else if (!(admin instanceof Admin)) {
@@ -206,6 +209,5 @@ public class Center {
             return "not-allowed";
         }
         //if(numBorrowedOfBook(borrow.getResourceId()) == library.getResources().get(borrow.getResourceId()).getNumber)//go and put num in resource and do it later
-        return null;//for test
     }
 }
