@@ -13,6 +13,9 @@ public class Parser {
 
     public void parsCommand(String input) throws ParseException {
         String[] command = input.split("#");
+        if (command.length == 1) {
+            return;
+        }
         String[] args = command[1].split("\\|");
         switch (command[0]) {
             case "add-library":

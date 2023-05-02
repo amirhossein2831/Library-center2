@@ -10,9 +10,9 @@ public class Center {
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
+        users = new HashMap<>();
         Admin admin = new Admin("admin", "AdminPass", "AmirHossein", "Motaghian", "000000000", "19", "Tehran,AUT");
         users.put(admin.getId(), admin);
-        users = new HashMap<>();
     }
 
     public String addLibrary(String adminId, String adminPass, Library library) {
@@ -186,5 +186,26 @@ public class Center {
         }
         return false;
     }
-
+    public String Borrow(Borrow borrow, String userPass) {
+        if (users.get(borrow.getUserId()) == null) {
+            return "not-found";
+        } else if (!users.get(borrow.getUserId()).getPass().equals(userPass)) {
+            return "invalid-pass";
+        }
+        Library library = libraries.get(borrow.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        if (library.getResources().get(borrow.getResourceId()) == null) {
+            return "not-found";
+        }
+        if (checkIsBorrowed(borrow.getResourceId(), borrow.getUserId())) {
+            return "not-allowed";
+        }
+        if (checkIsBorrowed(borrow.getResourceId(), borrow.getUserId())) {
+            return "not-allowed";
+        }
+        //if(numBorrowedOfBook(borrow.getResourceId()) == library.getResources().get(borrow.getResourceId()).getNumber)//go and put num in resource and do it later
+        return null;//for test
+    }
 }
