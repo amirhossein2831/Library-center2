@@ -3,7 +3,7 @@ public class Thesis extends Resource {
     private final String defYear;
 
     public Thesis(String id, String subject, String authorName, String categoryId, String libraryId, String advisor, String defYear) {
-        super(id, subject, authorName, categoryId, libraryId);
+        super(id, subject, authorName, categoryId, libraryId,1);
         this.advisor = advisor;
         this.defYear = defYear;
     }
