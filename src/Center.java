@@ -212,6 +212,18 @@ public class Center {
         if (checkIsBorrowed(borrow.getResourceId(), borrow.getUserId())) {
             return "not-allowed";                                 //if he take this book already
         }
-        //if(numBorrowedOfBook(borrow.getResourceId()) == library.getResources().get(borrow.getResourceId()).getNumber)//go and put num in resource and do it later
+        if (numBorrowedOfBook(borrow.getResourceId()) == resource.getNumber()) {//if all copy of book or thesis is borrowed
+            return "not-allowed";
+        }
+        int num = numBorrowedBYUser(borrow.getUserId());
+        if (user instanceof Student) {
+            if (num >= 3) {
+                return "not-allowed";
+            }
+        } else if (user instanceof Staff) {
+            if (num >= 5) {
+                return "not-allowed";
+            }
+        }
     }
 }
