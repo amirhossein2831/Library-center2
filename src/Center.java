@@ -157,10 +157,11 @@ public class Center {
         }
         return null;
     }
+
     public int numBorrowedBYUser(String userID) {
         int count = 0;
         for (Library library : libraries.values()) {
-            for (ArrayList<Borrow> borrows: library.getBorrows().values()) {
+            for (ArrayList<Borrow> borrows : library.getBorrows().values()) {
                 for (Borrow borrow : borrows) {
                     if (borrow.getUserId().equals(userID)) {
                         count++;
@@ -189,24 +190,27 @@ public class Center {
         }
         return false;
     }
+
     public String Borrow(Borrow borrow, String userPass) {
-        if (users.get(borrow.getUserId()) == null) {
+        User user = users.get((borrow.getUserId()));
+        if (user == null) {             //user not-found
             return "not-found";
-        } else if (!users.get(borrow.getUserId()).getPass().equals(userPass)) {
+        } else if (!user.getPass().equals(userPass)) {//invalid pass
             return "invalid-pass";
         }
-        Library library = libraries.get(borrow.getLibraryId());
+        Library library = libraries.get(borrow.getLibraryId());//library not-found
         if (library == null) {
             return "not-found";
         }
-        if (library.getResources().get(borrow.getResourceId()) == null) {
+        Resource resource = library.getResources().get(borrow.getResourceId());
+        if (resource == null) {                             //resource not-found
             return "not-found";
         }
-        if (checkIsBorrowed(borrow.getResourceId(), borrow.getUserId())) {
-            return "not-allowed";
+        if (resource instanceof GanjineBook || resource instanceof SellingBook) {
+            return "not-allowed";                         //if resource is a ganjineh or selling book
         }
         if (checkIsBorrowed(borrow.getResourceId(), borrow.getUserId())) {
-            return "not-allowed";
+            return "not-allowed";                                 //if he take this book already
         }
         //if(numBorrowedOfBook(borrow.getResourceId()) == library.getResources().get(borrow.getResourceId()).getNumber)//go and put num in resource and do it later
     }
