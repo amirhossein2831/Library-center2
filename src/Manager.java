@@ -5,7 +5,6 @@ public class Manager extends Staff{
         super(id, pass, firstName, lastName, nationalId, year, address);
         this.libraryId = libraryId;
     }
-
     public String getLibraryId() {
         return libraryId;
     }
