@@ -1,11 +1,9 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Center {
     private final HashMap<String, Library> libraries;
     private final HashMap<String, Category> categories;
     private HashMap<String, User> users;
-
 
     public Center() {
         libraries = new HashMap<>();
@@ -94,6 +92,7 @@ public class Center {
         }
         return checkResource(resource);
     }
+
     private String checkResource(Resource resource) {
         Library library = libraries.get(resource.getLibraryId());
         if (library == null) {
@@ -109,6 +108,7 @@ public class Center {
         return "success";
     }
 
+    //TODO need another condition to check user have any book or not
     public String removeResource(String managerId, String managerPass, String resourceID, String libraryId) {
         User manager = users.get(managerId);
         String answer = isManager(manager, managerPass, libraryId);
@@ -144,7 +144,6 @@ public class Center {
         return null;
     }
 
-    //TODO need another condition to be checked
     private String isAdmin(User admin, String adminPass) {
         if (admin == null) {
             return "not-found";
@@ -164,15 +163,17 @@ public class Center {
         }
         return x;
     }
-    public boolean checkDelay(Borrow borrow, Resource resource, User user) {
+
+    private boolean checkDelay(Borrow borrow, Resource resource, User user) {
         for (Library library : libraries.values()) {
-            if (library.hasDelay(borrow, resource, user, borrow.getUserId())){
+            if (library.hasDelay(borrow, resource, user, borrow.getUserId())) {
                 return true;
             }
         }
         return false;
     }
-    public String Borrow(Borrow borrow, String userPass) {
+
+    public String borrow(Borrow borrow, String userPass) {
         User user = users.get((borrow.getUserId()));
         if (user == null) {                                      //user not-found
             return "not-found";
@@ -190,8 +191,32 @@ public class Center {
         if (checkDelay(borrow, resource, user)) {
             return "not-allowed";                               //the user has delay
         }
-        if (!library.borrow(borrow, countBorrow(borrow.getUserId()), user,resource)) {
+        if (!library.borrow(borrow, countBorrow(borrow.getUserId()), user, resource)) {
             return "not-allowed";
+        }
+        return "success";
+    }
+
+    public String returning(Borrow borrow, String userPass) {
+        User user = users.get((borrow.getUserId()));
+        if (user == null) {                             //user not-found
+            return "not-found";
+        } else if (!user.getPass().equals(userPass)) {           //invalid pass
+            return "invalid-pass";
+        }
+        Library library = libraries.get(borrow.getLibraryId());  //library not-found
+        if (library == null) {
+            return "not-found";
+        }
+        Resource resource = library.getResource(borrow.getResourceId());
+        if (resource == null) {                                  //resource not-found
+            return "not-found";
+        }
+        int hold = library.returning(borrow, resource,user);
+        if (hold < 0) {
+            return "not-found";
+        } else if (hold > 0) {
+            return "" + hold;
         }
         return "success";
     }
