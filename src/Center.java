@@ -94,7 +94,6 @@ public class Center {
         }
         return checkResource(resource);
     }
-
     private String checkResource(Resource resource) {
         Library library = libraries.get(resource.getLibraryId());
         if (library == null) {
@@ -189,14 +188,11 @@ public class Center {
             return "not-found";
         }
         if (checkDelay(borrow, resource, user)) {
-            System.out.println("s");
             return "not-allowed";                               //the user has delay
         }
         if (!library.borrow(borrow, countBorrow(borrow.getUserId()), user,resource)) {
             return "not-allowed";
         }
         return "success";
-
-
     }
 }
