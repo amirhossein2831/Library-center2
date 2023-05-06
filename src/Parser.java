@@ -45,13 +45,13 @@ public class Parser {
             case "add-ganjineh-book":
                 addGanjine(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
                 break;
-            case "add-seeling-book":
+            case "add-selling-book":
                 addSellingBook(args[0], args[1], args[2], args[3], args[4], args[5], args[6], Integer.parseInt(args[7]), args[8], args[9], args[10], args[11]);
                 break;
             case "remove-resource":
                 removeResource(args[0], args[1], args[2], args[3]);
                 break;
-            case "Borrow":
+            case "borrow":
                 Borrow(args[0], args[1], args[2], args[3], args[4], args[5]);
                 break;
         }
