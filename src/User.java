@@ -6,6 +6,7 @@ public abstract class User {
     private final String nationalId;
     private final String year;
     private final String address;
+    private int debt;
 
     public User(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         this.id = id;
@@ -15,6 +16,7 @@ public abstract class User {
         this.nationalId = nationalId;
         this.year = year;
         this.address = address;
+        debt = 0;
     }
     public String getId() {
         return id;
@@ -42,5 +44,9 @@ public abstract class User {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setDebt(int debt) {
+        this.debt += debt;
     }
 }
