@@ -212,7 +212,7 @@ public class Center {
         if (resource == null) {                                  //resource not-found
             return "not-found";
         }
-        int hold = library.returning();
+        int hold = library.returning(borrow, resource,user);
         if (hold < 0) {
             return "not-found";
         } else if (hold > 0) {

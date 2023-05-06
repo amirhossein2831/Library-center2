@@ -162,4 +162,21 @@ public class Library {
         return x > 0;
     }
 
+    public int returning(Borrow borrow, Resource resource,User user) {
+        ArrayList<Borrow> borrows = this.borrows.get(borrow.getResourceId());
+        Borrow itsBorrow = null;
+        for (Borrow hold : borrows) {
+            if (hold.getUserId().equals(borrow.getUserId())) {
+                itsBorrow = hold;
+            }
+        }
+        if (itsBorrow == null) {
+            return -1;
+        }
+        int debt = checkDebt(itsBorrow, borrow.getDate(), resource, user);
+        user.setDebt(debt);
+        borrows.remove(itsBorrow);
+        return debt;
+    }
+
 }
