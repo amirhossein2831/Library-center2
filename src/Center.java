@@ -163,6 +163,7 @@ public class Center {
         }
         return x;
     }
+
     private boolean checkDelay(Borrow borrow, Resource resource, User user) {
         for (Library library : libraries.values()) {
             if (library.hasDelay(borrow, resource, user, borrow.getUserId())) {
@@ -171,6 +172,7 @@ public class Center {
         }
         return false;
     }
+
     public String borrow(Borrow borrow, String userPass) {
         User user = users.get((borrow.getUserId()));
         if (user == null) {                                      //user not-found
@@ -210,6 +212,12 @@ public class Center {
         if (resource == null) {                                  //resource not-found
             return "not-found";
         }
-
+        int hold = library.returning();
+        if (hold < 0) {
+            return "not-found";
+        } else if (hold > 0) {
+            return "" + hold;
+        }
+        return "success";
     }
 }
