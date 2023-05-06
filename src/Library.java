@@ -49,6 +49,7 @@ public class Library {
     public HashMap<String, ArrayList<Borrow>> getBorrows() {
         return borrows;
     }
+
     public Resource getResource(String resourceId) {
         return resources.get(resourceId);
     }
@@ -65,7 +66,7 @@ public class Library {
         return count;
     }
 
-    public boolean isBorrowedByUser(String userId, String resourceId) {     //check that user get this resource or not
+    private boolean isBorrowedByUser(String userId, String resourceId) {     //check that user get this resource or not
         ArrayList<Borrow> myBorrow = borrows.get(resourceId);
         if (myBorrow == null) {
             return false;
@@ -78,7 +79,7 @@ public class Library {
         return false;
     }
 
-    public int countBorrowedResources(String resourceId) {              //all borrows of a resource
+    private int countBorrowedResources(String resourceId) {              //all borrows of a resource
         ArrayList<Borrow> myBorrow = borrows.get(resourceId);
         if (myBorrow == null) {
             return 0;
@@ -98,7 +99,7 @@ public class Library {
             return false;                                               // all copy is borrowed ok
         }
         if (isBorrowedByUser(borrow.getUserId(), borrow.getResourceId())) {
-        return false;                                                   // user get this resource already ok
+            return false;                                                   // user get this resource already ok
         }
         if (user instanceof Student) {
             if (userBorrows < 3) {                                    //check able to get more or not ok
@@ -117,9 +118,10 @@ public class Library {
         }
         return false;                                       //the user in not student or staff
     }
-    public int checkDebt(Borrow borrow, Date returnTime,Resource resource,User user) {
+
+    private int checkDebt(Borrow borrow, Date returnTime, Resource resource, User user) {
         long firstMin = borrow.getDate().getTime() / 3600000;
-        long secondMin =  returnTime.getTime() / 3600000;
+        long secondMin = returnTime.getTime() / 3600000;
         long periodTime = secondMin - firstMin;
         if (user instanceof Student) {
             if (resource instanceof Book) {
@@ -144,9 +146,10 @@ public class Library {
         }
         return (int) ((periodTime - (10 * 24)) * 100);
     }
-    public boolean hasDelay(Borrow borrow1,Resource resource,User user,String userId) {     //check that user get this resource or not
+
+    public boolean hasDelay(Borrow borrow1, Resource resource, User user, String userId) {     //check that user get this resource or not
         int x = 0;
-        for(ArrayList<Borrow> myBorrow :borrows.values()) {
+        for (ArrayList<Borrow> myBorrow : borrows.values()) {
             if (myBorrow == null) {
                 return false;
             }

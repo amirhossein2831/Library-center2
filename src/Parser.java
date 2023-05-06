@@ -52,8 +52,13 @@ public class Parser {
                 removeResource(args[0], args[1], args[2], args[3]);
                 break;
             case "borrow":
-                Borrow(args[0], args[1], args[2], args[3], args[4], args[5]);
+                borrow(args[0], args[1], args[2], args[3], args[4], args[5]);
                 break;
+            case "return":
+                returning(args[0], args[1], args[2], args[3], args[4], args[5]);
+                break;
+
+
         }
     }
 
@@ -117,10 +122,17 @@ public class Parser {
         System.out.println(center.removeResource(managerId, managerPass, resourceId, libraryId));
     }
 
-    public void Borrow(String userId, String userPass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
+    public void borrow(String userId, String userPass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
         Borrow borrow = new Borrow(userId, resourceId, libraryId, date);
         System.out.println(center.Borrow(borrow, userPass));
+    }
+
+    public void returning(String userId, String userPass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
+        Borrow borrow = new Borrow(userId, resourceId, libraryId, date);
+        System.out.println(center.returning(borrow, userPass));
+
     }
 }
 
