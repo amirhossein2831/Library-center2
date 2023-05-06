@@ -1,4 +1,4 @@
-public class User {
+public abstract class User {
     private final String id;
     private final String pass;
     private final String firstName;
@@ -16,7 +16,6 @@ public class User {
         this.year = year;
         this.address = address;
     }
-
     public String getId() {
         return id;
     }

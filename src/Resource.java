@@ -1,4 +1,4 @@
-public class Resource {
+public abstract class Resource {
     private final String id;
     private final String subject;
     private final String authorName;

@@ -34,11 +34,11 @@ public class Center {
         if (answer != null) {
             return answer;
         }
-        if (!category.getParentId().equals("null") && categories.get(category.getParentId()) == null) {
-            return "not-found";
-        }
         if (categories.get(category.getId()) != null) {
             return "duplicate-id";
+        }
+        if (!category.getParentId().equals("null") && categories.get(category.getParentId()) == null) {
+            return "not-found";
         }
         categories.put(category.getId(), category);
         return "success";
@@ -158,72 +158,45 @@ public class Center {
         return null;
     }
 
-    public int numBorrowedBYUser(String userID) {
-        int count = 0;
+    private int countBorrow(String userId) {
+        int x = 0;
         for (Library library : libraries.values()) {
-            for (ArrayList<Borrow> borrows : library.getBorrows().values()) {
-                for (Borrow borrow : borrows) {
-                    if (borrow.getUserId().equals(userID)) {
-                        count++;
-                    }
-                }
-            }
+            x += library.countBorrow(userId);
         }
-        return count;
+        return x;
     }
-    public int numBorrowedOfBook(String resourceId) {
-        int count = 0;
+    public boolean checkDelay(Borrow borrow, Resource resource, User user) {
         for (Library library : libraries.values()) {
-            count += library.getBorrows().get(resourceId).size();
-        }
-        return count;
-    }
-
-    public boolean checkIsBorrowed(String resourceId, String userID) {
-        for (Library library : libraries.values()) {
-            ArrayList<Borrow> borrows = library.getBorrows().get(resourceId);
-            for (Borrow borrow : borrows) {
-                if (borrow.getUserId().equals(userID)) {
-                    return true;
-                }
+            if (library.hasDelay(borrow, resource, user, borrow.getUserId())){
+                return true;
             }
         }
         return false;
     }
-
     public String Borrow(Borrow borrow, String userPass) {
         User user = users.get((borrow.getUserId()));
-        if (user == null) {             //user not-found
+        if (user == null) {                                      //user not-found
             return "not-found";
-        } else if (!user.getPass().equals(userPass)) {//invalid pass
+        } else if (!user.getPass().equals(userPass)) {           //invalid pass
             return "invalid-pass";
         }
-        Library library = libraries.get(borrow.getLibraryId());//library not-found
+        Library library = libraries.get(borrow.getLibraryId());  //library not-found
         if (library == null) {
             return "not-found";
         }
-        Resource resource = library.getResources().get(borrow.getResourceId());
-        if (resource == null) {                             //resource not-found
+        Resource resource = library.getResource(borrow.getResourceId());
+        if (resource == null) {                                  //resource not-found
             return "not-found";
         }
-        if (resource instanceof GanjineBook || resource instanceof SellingBook) {
-            return "not-allowed";                         //if resource is a ganjineh or selling book
+        if (checkDelay(borrow, resource, user)) {
+            System.out.println("s");
+            return "not-allowed";                               //the user has delay
         }
-        if (checkIsBorrowed(borrow.getResourceId(), borrow.getUserId())) {
-            return "not-allowed";                                 //if he take this book already
-        }
-        if (numBorrowedOfBook(borrow.getResourceId()) == resource.getNumber()) {//if all copy of book or thesis is borrowed
+        if (!library.borrow(borrow, countBorrow(borrow.getUserId()), user,resource)) {
             return "not-allowed";
         }
-        int num = numBorrowedBYUser(borrow.getUserId());
-        if (user instanceof Student) {
-            if (num >= 3) {
-                return "not-allowed";
-            }
-        } else if (user instanceof Staff) {
-            if (num >= 5) {
-                return "not-allowed";
-            }
-        }
+        return "success";
+
+
     }
 }
