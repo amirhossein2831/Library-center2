@@ -249,6 +249,9 @@ public class Center {
         if (!(resource instanceof SellingBook)) {
             return "not-allowed";
         }
+        if (user.getDebt() != 0) {
+            return "not-allowed";
+        }
         if (user instanceof Manager) {
             return "permission-denied";
         }
