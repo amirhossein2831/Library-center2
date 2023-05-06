@@ -163,7 +163,6 @@ public class Center {
         }
         return x;
     }
-
     private boolean checkDelay(Borrow borrow, Resource resource, User user) {
         for (Library library : libraries.values()) {
             if (library.hasDelay(borrow, resource, user, borrow.getUserId())) {
@@ -172,8 +171,7 @@ public class Center {
         }
         return false;
     }
-
-    public String Borrow(Borrow borrow, String userPass) {
+    public String borrow(Borrow borrow, String userPass) {
         User user = users.get((borrow.getUserId()));
         if (user == null) {                                      //user not-found
             return "not-found";
@@ -195,5 +193,23 @@ public class Center {
             return "not-allowed";
         }
         return "success";
+    }
+
+    public String returning(Borrow borrow, String userPass) {
+        User user = users.get((borrow.getUserId()));
+        if (user == null) {                                      //user not-found
+            return "not-found";
+        } else if (!user.getPass().equals(userPass)) {           //invalid pass
+            return "invalid-pass";
+        }
+        Library library = libraries.get(borrow.getLibraryId());  //library not-found
+        if (library == null) {
+            return "not-found";
+        }
+        Resource resource = library.getResource(borrow.getResourceId());
+        if (resource == null) {                                  //resource not-found
+            return "not-found";
+        }
+
     }
 }

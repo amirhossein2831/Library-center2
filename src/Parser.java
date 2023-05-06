@@ -125,7 +125,7 @@ public class Parser {
     public void borrow(String userId, String userPass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
         Borrow borrow = new Borrow(userId, resourceId, libraryId, date);
-        System.out.println(center.Borrow(borrow, userPass));
+        System.out.println(center.borrow(borrow, userPass));
     }
 
     public void returning(String userId, String userPass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
