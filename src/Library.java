@@ -165,6 +165,9 @@ public class Library {
     public int returning(Borrow borrow, Resource resource,User user) {
         ArrayList<Borrow> borrows = this.borrows.get(borrow.getResourceId());
         Borrow itsBorrow = null;
+        if (borrows == null) {
+            return -1;
+        }
         for (Borrow hold : borrows) {
             if (hold.getUserId().equals(borrow.getUserId())) {
                 itsBorrow = hold;

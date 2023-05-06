@@ -45,7 +45,9 @@ public abstract class User {
     public String getAddress() {
         return address;
     }
-
+    public int getDebt() {
+        return debt;
+    }
     public void setDebt(int debt) {
         this.debt += debt;
     }
