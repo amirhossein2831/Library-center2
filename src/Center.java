@@ -187,6 +187,9 @@ public class Center {
         } else if (!user.getPass().equals(userPass)) {           //invalid pass
             return "invalid-pass";
         }
+        if (user.getDebt() != 0) {
+            return "not-allowed";
+        }
         Library library = libraries.get(borrow.getLibraryId());  //library not-found
         if (library == null) {
             return "not-found";
