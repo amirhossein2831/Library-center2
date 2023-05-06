@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Center {
@@ -5,12 +6,13 @@ public class Center {
     private final HashMap<String, Category> categories;
     private HashMap<String, User> users;
 
+
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
+        users = new HashMap<>();
         Admin admin = new Admin("admin", "AdminPass", "AmirHossein", "Motaghian", "000000000", "19", "Tehran,AUT");
         users.put(admin.getId(), admin);
-        users = new HashMap<>();
     }
 
     public String addLibrary(String adminId, String adminPass, Library library) {
@@ -32,8 +34,8 @@ public class Center {
         if (answer != null) {
             return answer;
         }
-        if (categories.get(category.getParentId()) == null) {
-            return "nou-found";
+        if (!category.getParentId().equals("null") && categories.get(category.getParentId()) == null) {
+            return "not-found";
         }
         if (categories.get(category.getId()) != null) {
             return "duplicate-id";
@@ -93,7 +95,7 @@ public class Center {
         return checkResource(resource);
     }
 
-    public String checkResource(Resource resource) {
+    private String checkResource(Resource resource) {
         Library library = libraries.get(resource.getLibraryId());
         if (library == null) {
             return "not-found";
@@ -101,7 +103,7 @@ public class Center {
         if (library.getResources().get(resource.getId()) != null) {
             return "duplicate-id";
         }
-        if (categories.get(resource.getCategoryId()) == null) {
+        if (!resource.getCategoryId().equals("null") && categories.get(resource.getCategoryId()) == null) {
             return "not-found";
         }
         library.getResources().put(resource.getId(), resource);
@@ -125,7 +127,7 @@ public class Center {
         return "success";
     }
 
-    public String isManager(User manager, String managerPass, String libraryId) {
+    private String isManager(User manager, String managerPass, String libraryId) {
         if (manager == null) {
             return "not-found";
         } else if (!(manager instanceof Manager)) {
@@ -134,6 +136,9 @@ public class Center {
         if (!manager.getPass().equals(managerPass)) {
             return "invalid-pass";
         }
+        if (libraries.get(libraryId) == null) {
+            return "not-found";
+        }
         if (!((Manager) manager).getLibraryId().equals(libraryId)) {
             return "permission-denied";
         }
@@ -141,7 +146,7 @@ public class Center {
     }
 
     //TODO need another condition to be checked
-    public String isAdmin(User admin, String adminPass) {
+    private String isAdmin(User admin, String adminPass) {
         if (admin == null) {
             return "not-found";
         } else if (!(admin instanceof Admin)) {
@@ -153,4 +158,72 @@ public class Center {
         return null;
     }
 
+    public int numBorrowedBYUser(String userID) {
+        int count = 0;
+        for (Library library : libraries.values()) {
+            for (ArrayList<Borrow> borrows : library.getBorrows().values()) {
+                for (Borrow borrow : borrows) {
+                    if (borrow.getUserId().equals(userID)) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    public int numBorrowedOfBook(String resourceId) {
+        int count = 0;
+        for (Library library : libraries.values()) {
+            count += library.getBorrows().get(resourceId).size();
+        }
+        return count;
+    }
+
+    public boolean checkIsBorrowed(String resourceId, String userID) {
+        for (Library library : libraries.values()) {
+            ArrayList<Borrow> borrows = library.getBorrows().get(resourceId);
+            for (Borrow borrow : borrows) {
+                if (borrow.getUserId().equals(userID)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public String Borrow(Borrow borrow, String userPass) {
+        User user = users.get((borrow.getUserId()));
+        if (user == null) {             //user not-found
+            return "not-found";
+        } else if (!user.getPass().equals(userPass)) {//invalid pass
+            return "invalid-pass";
+        }
+        Library library = libraries.get(borrow.getLibraryId());//library not-found
+        if (library == null) {
+            return "not-found";
+        }
+        Resource resource = library.getResources().get(borrow.getResourceId());
+        if (resource == null) {                             //resource not-found
+            return "not-found";
+        }
+        if (resource instanceof GanjineBook || resource instanceof SellingBook) {
+            return "not-allowed";                         //if resource is a ganjineh or selling book
+        }
+        if (checkIsBorrowed(borrow.getResourceId(), borrow.getUserId())) {
+            return "not-allowed";                                 //if he take this book already
+        }
+        if (numBorrowedOfBook(borrow.getResourceId()) == resource.getNumber()) {//if all copy of book or thesis is borrowed
+            return "not-allowed";
+        }
+        int num = numBorrowedBYUser(borrow.getUserId());
+        if (user instanceof Student) {
+            if (num >= 3) {
+                return "not-allowed";
+            }
+        } else if (user instanceof Staff) {
+            if (num >= 5) {
+                return "not-allowed";
+            }
+        }
+    }
 }

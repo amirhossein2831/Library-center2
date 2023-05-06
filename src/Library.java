@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Library {
@@ -7,6 +9,7 @@ public class Library {
     private final int numDesk;
     private final String address;
     private final HashMap<String, Resource> resources;
+    private HashMap<String, ArrayList<Borrow>> borrows;
 
     public Library(String id, String name, String year, int numDesk, String address) {
         this.id = id;
@@ -15,6 +18,7 @@ public class Library {
         this.numDesk = numDesk;
         this.address = address;
         resources = new HashMap<>();
+        borrows = new HashMap<>();
     }
 
     public String getId() {
@@ -37,7 +41,12 @@ public class Library {
         return address;
     }
 
+
     public HashMap<String, Resource> getResources() {
         return resources;
+    }
+
+    public HashMap<String, ArrayList<Borrow>> getBorrows() {
+        return borrows;
     }
 }

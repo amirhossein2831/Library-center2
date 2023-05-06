@@ -4,13 +4,15 @@ public class Resource {
     private final String authorName;
     private final String categoryId;
     private final String libraryId;
+    private int number;
 
-    public Resource(String id, String subject, String authorName, String categoryId, String libraryId) {
+    public Resource(String id, String subject, String authorName, String categoryId, String libraryId,int number) {
         this.id = id;
         this.subject = subject;
         this.authorName = authorName;
         this.categoryId = categoryId;
         this.libraryId = libraryId;
+        this.number = number;
     }
 
     public String getId() {
@@ -31,5 +33,9 @@ public class Resource {
 
     public String getLibraryId() {
         return libraryId;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }

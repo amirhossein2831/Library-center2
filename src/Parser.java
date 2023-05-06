@@ -1,3 +1,9 @@
+import javax.xml.crypto.Data;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.SimpleFormatter;
+
 public class Parser {
     private final Center center;
 
@@ -5,8 +11,11 @@ public class Parser {
         center = new Center();
     }
 
-    public void parsCommand(String input) {
+    public void parsCommand(String input) throws ParseException {
         String[] command = input.split("#");
+        if (command.length == 1) {
+            return;
+        }
         String[] args = command[1].split("\\|");
         switch (command[0]) {
             case "add-library":
@@ -36,11 +45,15 @@ public class Parser {
             case "add-ganjineh-book":
                 addGanjine(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
                 break;
-            case "add-selling-book":
+            case "add-seeling-book":
                 addSellingBook(args[0], args[1], args[2], args[3], args[4], args[5], args[6], Integer.parseInt(args[7]), args[8], args[9], args[10], args[11]);
                 break;
             case "remove-resource":
                 removeResource(args[0], args[1], args[2], args[3]);
+                break;
+            case "Borrow":
+                Borrow(args[0], args[1], args[2], args[3], args[4], args[5]);
+                break;
         }
     }
 
@@ -91,7 +104,7 @@ public class Parser {
     }
 
     public void addGanjine(String managerId, String managerPass, String id, String subject, String authorName, String publisher, String year, String donor, String categoryId, String libraryId) {
-        GanjineBook ganjineBook = new GanjineBook(id, subject, authorName, categoryId, libraryId, publisher, donor);
+        GanjineBook ganjineBook = new GanjineBook(id, subject, authorName, categoryId, libraryId, publisher,year, donor);
         System.out.println(center.addResource(managerId, managerPass, ganjineBook));
     }
 
@@ -102,6 +115,12 @@ public class Parser {
 
     public void removeResource(String managerId, String managerPass, String resourceId, String libraryId) {
         System.out.println(center.removeResource(managerId, managerPass, resourceId, libraryId));
+    }
+
+    public void Borrow(String userId, String userPass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
+        Borrow borrow = new Borrow(userId, resourceId, libraryId, date);
+        System.out.println(center.Borrow(borrow, userPass));
     }
 }
 
