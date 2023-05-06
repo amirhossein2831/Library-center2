@@ -70,7 +70,6 @@ public class Center {
         return "success";
     }
 
-    //TODO need another condition to check user have any book or not
     public String removeUser(String adminId, String adminPass, String id) {
         User admin = users.get(adminId);
         String answer = isAdmin(admin, adminPass);
@@ -114,7 +113,6 @@ public class Center {
         return "success";
     }
 
-    //TODO need another condition to check user have any book or not
     public String removeResource(String managerId, String managerPass, String resourceID, String libraryId) {
         User manager = users.get(managerId);
         String answer = isManager(manager, managerPass, libraryId);
@@ -127,6 +125,9 @@ public class Center {
         }
         if (library.getResources().get(resourceID) == null) {
             return "not-found";
+        }
+        if (library.getBorrows().get(resourceID) != null) {
+            return "not-allowed";
         }
         library.getResources().remove(resourceID);
         return "success";
