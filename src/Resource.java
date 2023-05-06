@@ -38,4 +38,8 @@ public abstract class Resource {
     public int getNumber() {
         return number;
     }
+
+    public void decreaseNumber() {
+        number--;
+    }
 }

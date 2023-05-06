@@ -57,8 +57,9 @@ public class Parser {
             case "return":
                 returning(args[0], args[1], args[2], args[3], args[4], args[5]);
                 break;
-
-
+            case "buy":
+                buy(args[0], args[1], args[2], args[3]);
+                break;
         }
     }
 
@@ -132,7 +133,9 @@ public class Parser {
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
         Borrow borrow = new Borrow(userId, resourceId, libraryId, date);
         System.out.println(center.returning(borrow, userPass));
-
+    }
+    public void buy(String userId, String pass, String libraryId, String resourceId) {
+        System.out.println(center.buy(userId, pass, libraryId, resourceId));
     }
 }
 
