@@ -230,4 +230,34 @@ public class Center {
         }
         return "success";
     }
+
+    public String buy(String userId, String pass, String libraryId, String resourceId) {
+        User user = users.get(userId);
+        if (user == null) {
+            return "not-found";
+        } else if (!user.getPass().equals(pass)) {
+            return "invalid-pass";
+        }
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        Resource resource = library.getResource(resourceId);
+        if (resource == null) {
+            return "not-found";
+        }
+        if (!(resource instanceof SellingBook)) {
+            return "not-allowed";
+        }
+        if (user instanceof Manager) {
+            return "permission-denied";
+        }
+        if (resource.getNumber() == 0) {
+            return "not-allowed";
+        }
+        Action action = (Action) user;
+        action.buy((SellingBook) resource);
+        resource.decreaseNumber();
+        return "success";
+    }
 }
