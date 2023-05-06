@@ -80,6 +80,12 @@ public class Center {
         if (users.get(id) == null) {
             return "not-found";
         }
+        if (users.get(id).getDebt() != 0) {
+            return "not-allowed";
+        }
+        if (countBorrow(id) != 0) {
+            return "not-allowed";
+        }
         users.remove(id);
         return "success";
     }
