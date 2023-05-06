@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.HashMap;
 
 public class Center {
@@ -261,6 +262,37 @@ public class Center {
         Action action = (Action) user;
         action.buy((SellingBook) resource);
         resource.decreaseNumber();
+        return "success";
+    }
+
+    public String read(String userId, String pass, String libraryId, String resourceId, Date date) {
+        User user = users.get(userId);
+        if (user == null) {
+            return "not-found";
+        } else if (!user.getPass().equals(pass)) {
+            return "invalid-pass";
+        }
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        Resource resource = library.getResource(resourceId);
+        if (resource == null) {
+            return "not-found";
+        }
+        if (!(resource instanceof GanjineBook)) {
+            return "not-allowed";
+        }
+        if (user.getDebt() != 0) {
+            return "not-allowed";
+        }
+        if (!(user instanceof Professor)) {
+            return "permission-denied";
+        }
+        Action action = (Action) user;
+        if (!(action.read((GanjineBook) resource, date))) {
+            return "not-allowed";
+        }
         return "success";
     }
 }
