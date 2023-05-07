@@ -15,4 +15,12 @@ public class Thesis extends Resource {
     public String getDefYear() {
         return defYear;
     }
+
+    @Override
+    public StringBuilder search(String key) {
+        if (getAdvisor().toUpperCase().contains(key.toUpperCase())) {
+            return new StringBuilder(this.getId());
+        }
+        return super.search(key);
+    }
 }
