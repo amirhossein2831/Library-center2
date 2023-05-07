@@ -344,4 +344,17 @@ public class Center {
         }
         return new StringBuilder("not-found");
     }
+
+    public StringBuilder searchUser(String userId, String pass, String key) {
+        User user = users.get(userId);
+        if (user == null) {
+            return new StringBuilder("not-found");
+        } else if (!user.getPass().equals(pass)) {
+            return new StringBuilder("invalid-pass");
+        }
+        if (user instanceof Student) {
+            return new StringBuilder("permission-denied");
+        }
+            
+    }
 }
