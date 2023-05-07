@@ -321,7 +321,6 @@ public class Center {
         com.addComment(comment, resource);
         return "success";
     }
-
     public StringBuilder search(String key) {
         StringBuilder str = new StringBuilder();
         HashSet<StringBuilder> values = new HashSet<>();
@@ -345,5 +344,4 @@ public class Center {
         }
         return new StringBuilder("not-found");
     }
-
 }
