@@ -50,4 +50,13 @@ public abstract class Resource {
     public void addComment(String comment) {
         this.comment.add(comment);
     }
+
+    public StringBuilder search(String key) {
+        if (subject.toUpperCase().contains(key.toUpperCase())) {
+            return new StringBuilder(this.getId());
+        } else if (authorName.toUpperCase().contains(key.toUpperCase())) {
+            return new StringBuilder(this.getId());
+        }
+        return new StringBuilder();
+    }
 }

@@ -69,7 +69,7 @@ public class Parser {
             case "search":
                 search(args[0]);
                 break;
-                
+
         }
     }
 
