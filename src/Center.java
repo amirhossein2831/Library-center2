@@ -250,16 +250,16 @@ public class Center {
         if (!(resource instanceof SellingBook)) {
             return "not-allowed";
         }
-        if (user.getDebt() != 0) {
-            return "not-allowed";
-        }
         if (user instanceof Manager) {
             return "permission-denied";
+        }
+        if (user.getDebt() != 0) {
+            return "not-allowed";
         }
         if (resource.getNumber() == 0) {
             return "not-allowed";
         }
-        Action action = (Action) user;
+        Buy action = (Buy) user;
         action.buy((SellingBook) resource);
         resource.decreaseNumber();
         return "success";
@@ -283,13 +283,13 @@ public class Center {
         if (!(resource instanceof GanjineBook)) {
             return "not-allowed";
         }
-        if (user.getDebt() != 0) {
-            return "not-allowed";
-        }
         if (!(user instanceof Professor)) {
             return "permission-denied";
         }
-        Action action = (Action) user;
+        if (user.getDebt() != 0) {
+            return "not-allowed";
+        }
+        Read action = (Read) user;
         if (!(action.read((GanjineBook) resource, date))) {
             return "not-allowed";
         }

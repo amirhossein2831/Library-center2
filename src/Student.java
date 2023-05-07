@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Student extends User implements Action {
+public class Student extends User implements Buy {
     private ArrayList<SellingBook> buys;
 
     public Student(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {

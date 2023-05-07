@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Professor extends User implements Action {
+public class Professor extends User implements Buy, Read {
     private ArrayList<SellingBook> buys;
-    private HashMap<GanjineBook, Date> read;
+    private GanjineBook read;
     public Professor(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         super(id, pass, firstName, lastName, nationalId, year, address);
         buys = new ArrayList<>();
-        read = new HashMap<>();
+        read = null;
     }
     public void buy(SellingBook sellingBook) {
         buys.add(sellingBook);
@@ -17,13 +17,14 @@ public class Professor extends User implements Action {
     @Override
     public boolean read(GanjineBook ganjineBook, Date date) {
         if (IsGanjinehAvail(ganjineBook, date)) {
-            read.put(ganjineBook, date);
+            read = ganjineBook;
+            read.setDate(date);
             return true;
         }
         return false;
     }
     private boolean IsGanjinehAvail(GanjineBook ganjineBook, Date date) {
-        Date dateHold = read.get(ganjineBook);
+        Date dateHold = ganjineBook.getDate();
         if (dateHold == null) {
             return true;
         }
