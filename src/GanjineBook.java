@@ -1,13 +1,17 @@
+import java.util.Date;
+
 public class GanjineBook extends Resource {
     private final String publisher;
     private final String donor;
     private String year;
+    private Date date;
 
     public GanjineBook(String id, String subject, String authorName, String categoryId, String libraryId, String publisher, String year, String donor) {
         super(id, subject, authorName, categoryId, libraryId,1);
         this.publisher = publisher;
         this.year = year;
         this.donor = donor;
+        date = null;
     }
 
     public String getPublisher() {
@@ -20,5 +24,13 @@ public class GanjineBook extends Resource {
 
     public String getDonor() {
         return donor;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

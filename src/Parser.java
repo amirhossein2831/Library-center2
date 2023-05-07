@@ -60,6 +60,9 @@ public class Parser {
             case "buy":
                 buy(args[0], args[1], args[2], args[3]);
                 break;
+            case "read":
+                read(args[0], args[1], args[2], args[3], args[4], args[5]);
+                break;
         }
     }
 
@@ -136,6 +139,12 @@ public class Parser {
     }
     public void buy(String userId, String pass, String libraryId, String resourceId) {
         System.out.println(center.buy(userId, pass, libraryId, resourceId));
+    }
+
+    public void read(String userId, String pass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
+        System.out.println(center.read(userId, pass, libraryId, resourceId, date));
+
     }
 }
 
