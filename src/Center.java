@@ -347,6 +347,7 @@ public class Center {
 
     public StringBuilder searchUser(String userId, String pass, String key) {
         User user = users.get(userId);
+        HashSet<String> temp = new HashSet<>();
         if (user == null) {
             return new StringBuilder("not-found");
         } else if (!user.getPass().equals(pass)) {
@@ -355,6 +356,10 @@ public class Center {
         if (user instanceof Student) {
             return new StringBuilder("permission-denied");
         }
+        Collection <User> collection = users.values();
+        ArrayList<User> usersHold = new ArrayList<>(collection);
+        SearchUser searchUser = (SearchUser) user;
+        temp = searchUser.searchUser(usersHold,key);
 
     }
 }

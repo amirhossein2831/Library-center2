@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Admin extends User implements Buy,SearchUser {
     private ArrayList<SellingBook> buys;
@@ -9,5 +10,19 @@ public class Admin extends User implements Buy,SearchUser {
     public void buy(SellingBook sellingBook) {
         buys.add(sellingBook);
     }
-    
+
+    @Override
+    public HashSet<String> searchUser(ArrayList<User> users,String key) {
+        HashSet<String> value = new HashSet<>();
+        for (User user : users) {
+            if (user.getFirstName().equalsIgnoreCase(key)) {
+                value.add(user.getId());
+            }
+            else if (user.getLastName().equalsIgnoreCase(key)) {
+                value.add(user.getId());
+            }
+        }
+        return value;
+    }
+
 }
