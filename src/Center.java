@@ -347,7 +347,8 @@ public class Center {
 
     public StringBuilder searchUser(String userId, String pass, String key) {
         User user = users.get(userId);
-        HashSet<String> temp = new HashSet<>();
+        StringBuilder str = new StringBuilder();
+        HashSet<String> values ;
         if (user == null) {
             return new StringBuilder("not-found");
         } else if (!user.getPass().equals(pass)) {
@@ -358,8 +359,19 @@ public class Center {
         }
         Collection <User> collection = users.values();
         ArrayList<User> usersHold = new ArrayList<>(collection);
-        SearchUser searchUser = (SearchUser) user;
-        temp = searchUser.searchUser(usersHold,key);
-
+        values = ((SearchUser) user).searchUser(usersHold,key);
+        if (values == null) {
+            return new StringBuilder("not-found");
+        }
+        ArrayList<String> hold = new ArrayList<>(values);
+        Collections.sort(hold);
+        for (String temp : hold) {
+            str.append(temp);
+            str.append("|");
+        }
+        if (str.length() != 0) {
+            str.deleteCharAt(str.length() - 1);
+        }
+        return str;
     }
 }
