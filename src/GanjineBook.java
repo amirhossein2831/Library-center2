@@ -33,4 +33,11 @@ public class GanjineBook extends Resource {
     public void setDate(Date date) {
         this.date = date;
     }
+    @Override
+    public StringBuilder search(String key) {
+        if (getPublisher().toUpperCase().contains(key.toUpperCase())) {
+            return new StringBuilder(this.getId());
+        }
+        return super.search(key);
+    }
 }
