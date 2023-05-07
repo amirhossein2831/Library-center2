@@ -63,6 +63,9 @@ public class Parser {
             case "read":
                 read(args[0], args[1], args[2], args[3], args[4], args[5]);
                 break;
+            case "add-comment":
+                addComment(args[0], args[1], args[2], args[3], args[4]);
+                break;
         }
     }
 
@@ -144,6 +147,10 @@ public class Parser {
     public void read(String userId, String pass, String libraryId, String resourceId, String strDate, String hour) throws ParseException {
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
         System.out.println(center.read(userId, pass, libraryId, resourceId, date));
+    }
+
+    public void addComment(String userId,String pass,String libraryId,String bookId,String comment) {
+        System.out.println(center.addComment(userId, pass, libraryId, bookId, comment));
 
     }
 }
