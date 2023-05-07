@@ -355,6 +355,6 @@ public class Center {
         if (user instanceof Student) {
             return new StringBuilder("permission-denied");
         }
-            
+
     }
 }

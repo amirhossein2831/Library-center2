@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Staff extends User implements Buy {
+public class Staff extends User implements Buy,SearchUser {
     private ArrayList<SellingBook> buys;
     public Staff(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         super(id, pass, firstName, lastName, nationalId, year, address);

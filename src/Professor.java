@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Professor extends User implements Buy, Read, Comment {
+public class Professor extends User implements Buy, Read, Comment,SearchUser {
     private ArrayList<SellingBook> buys;
     private GanjineBook read;
     public Professor(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {

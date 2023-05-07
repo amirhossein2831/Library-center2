@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Admin extends User implements Buy {
+public class Admin extends User implements Buy,SearchUser {
     private ArrayList<SellingBook> buys;
     public Admin(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         super(id, pass, firstName, lastName, nationalId, year, address);
@@ -9,4 +9,5 @@ public class Admin extends User implements Buy {
     public void buy(SellingBook sellingBook) {
         buys.add(sellingBook);
     }
+    
 }
