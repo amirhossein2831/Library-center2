@@ -295,4 +295,27 @@ public class Center {
         }
         return "success";
     }
+
+    public String addComment(String userId, String pass, String libraryId, String resourceId, String comment) {
+        User user = users.get(userId);
+        if (user == null) {
+            return "not-found";
+        } else if (!user.getPass().equals(pass)) {
+            return "invalid-pass";
+        }
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        Resource resource = library.getResource(resourceId);
+        if (resource == null) {
+            return "not-found";
+        }
+        if (user instanceof Manager) {
+            return "permission-denied";
+        }
+        Buy addComment = (Buy) user;
+        addComment.addComment(comment, resource);
+        return "success";
+    }
 }
