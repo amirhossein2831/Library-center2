@@ -14,4 +14,11 @@ public class Book extends Resource {
     public String getYear() {
         return year;
     }
+    @Override
+    public StringBuilder search(String key) {
+        if (getPublisher().toUpperCase().contains(key.toUpperCase())) {
+            return new StringBuilder(this.getId());
+        }
+        return super.search(key);
+    }
 }

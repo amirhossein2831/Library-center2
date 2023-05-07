@@ -66,6 +66,10 @@ public class Parser {
             case "add-comment":
                 addComment(args[0], args[1], args[2], args[3], args[4]);
                 break;
+            case "search":
+                search(args[0]);
+                break;
+
         }
     }
 
@@ -151,7 +155,10 @@ public class Parser {
 
     public void addComment(String userId,String pass,String libraryId,String bookId,String comment) {
         System.out.println(center.addComment(userId, pass, libraryId, bookId, comment));
+    }
 
+    public void search(String key) {
+        System.out.println(center.search(key));
     }
 }
 

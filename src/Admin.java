@@ -9,8 +9,4 @@ public class Admin extends User implements Buy {
     public void buy(SellingBook sellingBook) {
         buys.add(sellingBook);
     }
-    @Override
-    public void addComment(String comment,Resource resource) {
-        resource.addComment(comment);
-    }
 }
