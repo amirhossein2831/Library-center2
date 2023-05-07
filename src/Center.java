@@ -1,5 +1,5 @@
-import java.util.Date;
-import java.util.HashMap;
+import java.awt.*;
+import java.util.*;
 
 public class Center {
     private final HashMap<String, Library> libraries;
@@ -321,4 +321,29 @@ public class Center {
         com.addComment(comment, resource);
         return "success";
     }
+
+    public StringBuilder search(String key) {
+        StringBuilder str = new StringBuilder();
+        HashSet<StringBuilder> values = new HashSet<>();
+        for (Library library : libraries.values()) {
+            for (Resource resource : library.getResources().values()) {
+                StringBuilder s = resource.search(key);
+                if (s.length() != 0) {
+                    values.add(resource.search(key));
+                }
+            }
+        }
+        ArrayList<StringBuilder> hold = new ArrayList<>(values);
+        Collections.sort(hold);
+        for (StringBuilder temp : hold) {
+            str.append(temp);
+            str.append("|");
+        }
+        if (str.length() != 0) {
+            str.deleteCharAt(str.length() - 1);
+            return str;
+        }
+        return new StringBuilder("not-found");
+    }
+
 }
