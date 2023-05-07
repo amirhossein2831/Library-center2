@@ -33,4 +33,8 @@ public class Professor extends User implements Buy, Read {
         long periodTime = secondTime - firstTime;
         return periodTime >= 2;
     }
+    @Override
+    public void addComment(String comment,Resource resource) {
+        resource.addComment(comment);
+    }
 }
