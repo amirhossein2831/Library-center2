@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Resource {
     private final String id;
     private final String subject;
@@ -5,6 +7,7 @@ public abstract class Resource {
     private final String categoryId;
     private final String libraryId;
     private int number;
+    private ArrayList<String> comment;
 
     public Resource(String id, String subject, String authorName, String categoryId, String libraryId,int number) {
         this.id = id;
@@ -13,6 +16,7 @@ public abstract class Resource {
         this.categoryId = categoryId;
         this.libraryId = libraryId;
         this.number = number;
+        comment = new ArrayList<>();
     }
 
     public String getId() {
@@ -41,5 +45,9 @@ public abstract class Resource {
 
     public void decreaseNumber() {
         number--;
+    }
+
+    public void addComment(String comment) {
+        this.comment.add(comment);
     }
 }
