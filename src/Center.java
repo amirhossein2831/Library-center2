@@ -314,8 +314,11 @@ public class Center {
         if (user instanceof Manager) {
             return "permission-denied";
         }
-        Buy addComment = (Buy) user;
-        addComment.addComment(comment, resource);
+        if (!(user instanceof Student || user instanceof Professor)) {
+            return "permission-denied";
+        }
+        Comment com = (Comment) user;
+        com.addComment(comment, resource);
         return "success";
     }
 }
