@@ -321,7 +321,6 @@ public class Center {
         com.addComment(comment, resource);
         return "success";
     }
-
     public StringBuilder search(String key) {
         StringBuilder str = new StringBuilder();
         HashSet<StringBuilder> values = new HashSet<>();
@@ -346,4 +345,33 @@ public class Center {
         return new StringBuilder("not-found");
     }
 
+    public StringBuilder searchUser(String userId, String pass, String key) {
+        User user = users.get(userId);
+        StringBuilder str = new StringBuilder();
+        HashSet<String> values ;
+        if (user == null) {
+            return new StringBuilder("not-found");
+        } else if (!user.getPass().equals(pass)) {
+            return new StringBuilder("invalid-pass");
+        }
+        if (user instanceof Student) {
+            return new StringBuilder("permission-denied");
+        }
+        Collection <User> collection = users.values();
+        ArrayList<User> usersHold = new ArrayList<>(collection);
+        values = ((SearchUser) user).searchUser(usersHold,key);
+        if (values == null) {
+            return new StringBuilder("not-found");
+        }
+        ArrayList<String> hold = new ArrayList<>(values);
+        Collections.sort(hold);
+        for (String temp : hold) {
+            str.append(temp);
+            str.append("|");
+        }
+        if (str.length() != 0) {
+            str.deleteCharAt(str.length() - 1);
+        }
+        return str;
+    }
 }

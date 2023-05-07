@@ -1,4 +1,7 @@
-public abstract class User {
+import java.util.ArrayList;
+import java.util.HashSet;
+
+public abstract class User implements SearchUser{
     private final String id;
     private final String pass;
     private final String firstName;
@@ -50,5 +53,18 @@ public abstract class User {
     }
     public void setDebt(int debt) {
         this.debt += debt;
+    }
+    @Override
+    public HashSet<String> searchUser(ArrayList<User> users, String key) {
+        HashSet<String> value = new HashSet<>();
+        for (User user : users) {
+            if (user.getFirstName().toUpperCase().contains(key.toUpperCase())) {
+                value.add(user.getId());
+            }
+            else if (user.getLastName().toUpperCase().contains(key.toUpperCase())) {
+                value.add(user.getId());
+            }
+        }
+        return value;
     }
 }
