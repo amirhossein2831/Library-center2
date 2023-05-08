@@ -218,4 +218,33 @@ public class Library {
         return str;
     }
 
+    public String libraryReport() {
+        int bookNum = 0;
+        int thesisNum = 0;
+        int ganjineNum = 0;
+        int sellingBookNum = 0;
+        int borrowedBook = 0;
+        int borrowedThesis = 0;
+        for (Resource resource : resources.values()) {
+            if (resource instanceof Thesis) {
+                thesisNum++;
+            } else if (resource instanceof GanjineBook) {
+                ganjineNum++;
+            } else if (resource instanceof SellingBook) {
+                sellingBookNum++;
+            } else if (resource instanceof Book) {
+                bookNum++;
+            }
+        }
+        for (String resourceId : borrows.keySet()) {
+            Resource resource = resources.get(resourceId);
+            if (resource instanceof Book) {
+                borrowedBook++;
+            } else if (resource instanceof Thesis) {
+                borrowedThesis++;
+            }
+        }
+        return "" + bookNum + " " + thesisNum + " " + borrowedBook + " " + borrowedThesis + " " + ganjineNum + " " + sellingBookNum;
+    }
+
 }
