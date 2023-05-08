@@ -103,6 +103,8 @@ public class Library {
             if (userBorrows < 3) {                                    //check able to get more or not ok
                 borrows1.add(borrow);
                 borrows.put(borrow.getResourceId(), borrows1);
+                resource.decreaseRealNum();
+
                 return true;
             }
             return false;
@@ -110,6 +112,7 @@ public class Library {
             if (userBorrows < 5) {                                       //check able to get more or not ok
                 borrows1.add(borrow);
                 borrows.put(borrow.getResourceId(), borrows1);
+                resource.decreaseRealNum();
                 return true;
             }
             return false;
@@ -159,7 +162,8 @@ public class Library {
         }
         return x > 0;
     }
-    public HashSet<String> hasDelay(Date date,HashMap<String,User> users) {     //check that user get this resource or not
+
+    public HashSet<String> hasDelay(Date date, HashMap<String, User> users) {     //check that user get this resource or not
         HashSet<String> values = new HashSet<>();
         for (ArrayList<Borrow> myBorrow : borrows.values()) {
             if (myBorrow == null) {
@@ -180,7 +184,7 @@ public class Library {
         return values;
     }
 
-    public int returning(Borrow borrow, Resource resource,User user) {
+    public int returning(Borrow borrow, Resource resource, User user) {
         ArrayList<Borrow> borrows = this.borrows.get(borrow.getResourceId());
         Borrow itsBorrow = null;
         if (borrows == null) {
@@ -197,9 +201,9 @@ public class Library {
         int debt = checkDebt(itsBorrow, borrow.getDate(), resource, user);
         user.setDebt(debt);
         borrows.remove(itsBorrow);
+        resource.increaseRealNumber();
         return debt;
     }
-
     public StringBuilder reportPassedDeadLine(Date date, HashMap<String, User> users) {
         HashSet<String> values = hasDelay(date, users);
         if (values == null) {
@@ -219,31 +223,75 @@ public class Library {
     }
 
     public String libraryReport() {
-        int bookNum = 0;
-        int thesisNum = 0;
-        int ganjineNum = 0;
-        int sellingBookNum = 0;
-        int borrowedBook = 0;
-        int borrowedThesis = 0;
+        int bookNum = 0, thesisNum = 0, ganjineNum = 0, sellingBookNum = 0, borrowedBook = 0, borrowedThesis = 0;
         for (Resource resource : resources.values()) {
             if (resource instanceof Thesis) {
-                thesisNum++;
+                thesisNum+=resource.getRealNum();
             } else if (resource instanceof GanjineBook) {
-                ganjineNum++;
+                ganjineNum+=resource.getRealNum();
             } else if (resource instanceof SellingBook) {
-                sellingBookNum+= resource.getNumber();
+                sellingBookNum += resource.getRealNum();
             } else if (resource instanceof Book) {
-                bookNum += resource.getNumber();
+                bookNum += resource.getRealNum();
             }
         }
         for (String resourceId : borrows.keySet()) {
             Resource resource = resources.get(resourceId);
             if (resource instanceof Book) {
-                borrowedBook++;
+                borrowedBook += resource.getNumber() - resource.getRealNum();
             } else if (resource instanceof Thesis) {
-                borrowedThesis++;
+                borrowedThesis+=resource.getNumber() - resource.getRealNum();
             }
         }
         return "" + bookNum + " " + thesisNum + " " + borrowedBook + " " + borrowedThesis + " " + ganjineNum + " " + sellingBookNum;
+    }
+
+    public int[] categoryReport(HashMap<String, Category> categories, String categoryId) {
+        int[] hold = {0, 0, 0, 0};
+        if (categoryId.equals("null")) {
+            for (Resource resource : resources.values()) {
+                {
+                    if (resource.getCategoryId().equals("null"))
+                        if (resource instanceof Thesis) {
+                            hold[0]+=resource.getRealNum();
+                        } else if (resource instanceof GanjineBook) {
+                            hold[1]+=resource.getRealNum();
+                        } else if (resource instanceof SellingBook) {
+                            hold[2] += resource.getRealNum();
+                        } else if (resource instanceof Book) {
+                            hold[3] += resource.getRealNum();
+                        }
+                }
+            }
+            return hold;
+        }
+        Category category = categories.get(categoryId);
+        if (category == null) {
+            return null;
+        }
+
+        for (Resource resource : resources.values()) {
+            {
+                if (resource.getCategoryId().equals(categoryId))
+                    if (resource instanceof Thesis) {
+                        hold[0]+= resource.getRealNum();
+                    } else if (resource instanceof GanjineBook) {
+                        hold[1] += resource.getRealNum();
+                    } else if (resource instanceof SellingBook) {
+                        hold[2] += resource.getRealNum();
+                    } else if (resource instanceof Book) {
+                        hold[3] += resource.getRealNum();
+                    }
+            }
+        }
+
+        for (String sub : category.getSubs()) {
+            int[] temp = categoryReport(categories, sub);
+            hold[0] += temp[0];
+            hold[1] += temp[1];
+            hold[2] += temp[2];
+            hold[3] += temp[3];
+        }
+        return hold;
     }
 }
