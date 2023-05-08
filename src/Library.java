@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 public class Library {
     private final String id;
@@ -161,6 +159,26 @@ public class Library {
         }
         return x > 0;
     }
+    public HashSet<String> hasDelay(Date date,HashMap<String,User> users) {     //check that user get this resource or not
+        HashSet<String> values = new HashSet<>();
+        for (ArrayList<Borrow> myBorrow : borrows.values()) {
+            if (myBorrow == null) {
+                return null;
+            }
+            for (Borrow borrow : myBorrow) {
+                User user = users.get(borrow.getUserId());
+                Resource resource = resources.get(borrow.getResourceId());
+                if (checkDebt(borrow, date, resource, user) > 0) {
+                    values.add(borrow.getResourceId());
+                }
+            }
+        }
+
+        if (values.size() == 0) {
+            return null;
+        }
+        return values;
+    }
 
     public int returning(Borrow borrow, Resource resource,User user) {
         ArrayList<Borrow> borrows = this.borrows.get(borrow.getResourceId());
@@ -180,6 +198,24 @@ public class Library {
         user.setDebt(debt);
         borrows.remove(itsBorrow);
         return debt;
+    }
+
+    public StringBuilder reportPassedDeadLine(Date date, HashMap<String, User> users) {
+        HashSet<String> values = hasDelay(date, users);
+        if (values == null) {
+            return new StringBuilder("none");
+        }
+        ArrayList<String> hold = new ArrayList<>(values);
+        StringBuilder str = new StringBuilder();
+        Collections.sort(hold);
+        for (String i : hold) {
+            str.append(i);
+            str.append("|");
+        }
+        if (str.length() != 0) {
+            str.deleteCharAt(str.length() - 1);
+        }
+        return str;
     }
 
 }
