@@ -5,7 +5,6 @@ public class Center {
     private final HashMap<String, Library> libraries;
     private final HashMap<String, Category> categories;
     private HashMap<String, User> users;
-
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
@@ -13,7 +12,6 @@ public class Center {
         Admin admin = new Admin("admin", "AdminPass", "AmirHossein", "Motaghian", "000000000", "19", "Tehran,AUT");
         users.put(admin.getId(), admin);
     }
-
     public String addLibrary(String adminId, String adminPass, Library library) {
         User admin = users.get(adminId);
         String answer = isAdmin(admin, adminPass);
@@ -26,7 +24,6 @@ public class Center {
         libraries.put(library.getId(), library);
         return "success";
     }
-
     public String addCategory(String adminId, String adminPass, Category category) {
         User admin = users.get(adminId);
         String answer = isAdmin(admin, adminPass);
@@ -102,7 +99,6 @@ public class Center {
         }
         return checkResource(resource);
     }
-
     private String checkResource(Resource resource) {
         Library library = libraries.get(resource.getLibraryId());
         if (library == null) {
@@ -117,7 +113,6 @@ public class Center {
         library.getResources().put(resource.getId(), resource);
         return "success";
     }
-
     public String removeResource(String managerId, String managerPass, String resourceID, String libraryId) {
         User manager = users.get(managerId);
         String answer = isManager(manager, managerPass, libraryId);
@@ -175,7 +170,6 @@ public class Center {
         }
         return x;
     }
-
     private boolean checkDelay(Borrow borrow, Resource resource, User user) {
         for (Library library : libraries.values()) {
             if (library.hasDelay(borrow, resource, user, borrow.getUserId())) {
@@ -236,21 +230,29 @@ public class Center {
         return "success";
     }
 
-    public String buy(String userId, String pass, String libraryId, String resourceId) {
-        User user = users.get(userId);
-        if (user == null) {
+    private String checkCon(String userId, String pass, String libraryId, String resourceId) {
+        if (users.get(userId) == null) {
             return "not-found";
-        } else if (!user.getPass().equals(pass)) {
+        } else if (!users.get(userId).getPass().equals(pass)) {
             return "invalid-pass";
         }
+        if (libraries.get(libraryId) == null) {
+            return "not-found";
+        }
+        if (libraries.get(libraryId).getResource(resourceId) == null) {
+            return "not-found";
+        }
+
+        return null;
+    }
+    public String buy(String userId, String pass, String libraryId, String resourceId) {
+        String answer = checkCon(userId, pass, libraryId, resourceId);
+        if (answer != null) {
+            return answer;
+        }
+        User user = users.get(userId);
         Library library = libraries.get(libraryId);
-        if (library == null) {
-            return "not-found";
-        }
         Resource resource = library.getResource(resourceId);
-        if (resource == null) {
-            return "not-found";
-        }
         if (!(resource instanceof SellingBook)) {
             return "not-allowed";
         }
@@ -268,22 +270,14 @@ public class Center {
         resource.decreaseRealNum();
         return "success";
     }
-
     public String read(String userId, String pass, String libraryId, String resourceId, Date date) {
+        String answer = checkCon(userId, pass, libraryId, resourceId);
+        if (answer != null) {
+            return answer;
+        }
         User user = users.get(userId);
-        if (user == null) {
-            return "not-found";
-        } else if (!user.getPass().equals(pass)) {
-            return "invalid-pass";
-        }
         Library library = libraries.get(libraryId);
-        if (library == null) {
-            return "not-found";
-        }
         Resource resource = library.getResource(resourceId);
-        if (resource == null) {
-            return "not-found";
-        }
         if (!(resource instanceof GanjineBook)) {
             return "not-allowed";
         }
@@ -299,22 +293,14 @@ public class Center {
         }
         return "success";
     }
-
     public String addComment(String userId, String pass, String libraryId, String resourceId, String comment) {
+        String answer = checkCon(userId, pass, libraryId, resourceId);
+        if (answer != null) {
+            return answer;
+        }
         User user = users.get(userId);
-        if (user == null) {
-            return "not-found";
-        } else if (!user.getPass().equals(pass)) {
-            return "invalid-pass";
-        }
         Library library = libraries.get(libraryId);
-        if (library == null) {
-            return "not-found";
-        }
         Resource resource = library.getResource(resourceId);
-        if (resource == null) {
-            return "not-found";
-        }
         if (user instanceof Manager) {
             return "permission-denied";
         }
@@ -418,90 +404,58 @@ public class Center {
        return library.reportPassedDeadLine(date,users);
     }
 
-    public String libraryReport(String userId, String pass, String libraryId) {
-        User user = users.get(userId);
-        if (user == null) {
+    private String check(String userId, String pass, String libraryId) {
+        if (users.get(userId) == null) {
             return "not-found";
-        } else if (!user.getPass().equals(pass)) {
+        } else if (!users.get(userId).getPass().equals(pass)) {
             return "invalid-pass";
         }
-        Library library = libraries.get(libraryId);
-        if (library == null) {
+        if (libraries.get(libraryId) == null) {
             return "not-found";
         }
-        if (!(user instanceof Manager)) {
+        if (!(users.get(userId) instanceof Manager)) {
             return "permission-denied";
         }
-        if (!((Manager) user).getLibraryId().equals(libraryId)) {
+        if (!((Manager) users.get(userId)).getLibraryId().equals(libraryId)) {
             return "permission-denied";
         }
-        return library.libraryReport();
+        return null;
     }
 
-    public String categoryReport(String userId,String pass,String categoryId,String libraryId) {
-        User user = users.get(userId);
-        if (user == null) {
-            return "not-found";
-        } else if (!user.getPass().equals(pass)) {
-            return "invalid-pass";
+    public String libraryReport(String userId, String pass, String libraryId) {
+        String answer = check(userId, pass, libraryId);
+        if (answer != null) {
+            return answer;
         }
         Library library = libraries.get(libraryId);
-        if (library == null) {
-            return "not-found";
+        return library.libraryReport();
+    }
+    public String categoryReport(String userId,String pass,String categoryId,String libraryId) {
+        String answer = check(userId, pass, libraryId);
+        if (answer != null) {
+            return answer;
         }
-
-        if (!(user instanceof Manager)) {
-            return "permission-denied";
-        }
-        if (!((Manager) user).getLibraryId().equals(libraryId)) {
-            return "permission-denied";
-        }
+        Library library = libraries.get(libraryId);
         int [] hold = library.categoryReport(categories,categoryId);
         if (hold == null) {
             return "not-found";
         }
         return hold[3] + " " + hold[0] + " " + hold[1] + " " + hold[2];
     }
-
     public String reportMostPopular(String userId, String pass, String libraryId) {
-        User user = users.get(userId);
-        if (user == null) {
-            return "not-found";
-        } else if (!user.getPass().equals(pass)) {
-            return "invalid-pass";
+        String answer = check(userId, pass, libraryId);
+        if (answer != null) {
+            return answer;
         }
         Library library = libraries.get(libraryId);
-        if (library == null) {
-            return "not-found";
-        }
-
-        if (!(user instanceof Manager)) {
-            return "permission-denied";
-        }
-        if (!((Manager) user).getLibraryId().equals(libraryId)) {
-            return "permission-denied";
-        }
         return library.reportMostPopular();
     }
-
     public String reportSelling(String userId, String pass, String libraryId) {
-        User user = users.get(userId);
-        if (user == null) {
-            return "not-found";
-        } else if (!user.getPass().equals(pass)) {
-            return "invalid-pass";
+        String answer = check(userId, pass, libraryId);
+        if (answer != null) {
+            return answer;
         }
         Library library = libraries.get(libraryId);
-        if (library == null) {
-            return "not-found";
-        }
-
-        if (!(user instanceof Manager)) {
-            return "permission-denied";
-        }
-        if (!((Manager) user).getLibraryId().equals(libraryId)) {
-            return "permission-denied";
-        }
          return library.reportSelling(users,libraryId);
     }
 }

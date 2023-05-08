@@ -121,12 +121,12 @@ public class Library {
         return false;                                       //the user in not student or staff
     }
 
-    private int checkDebt(Borrow borrow, Date returnTime, Resource resource, User user,boolean check) {
+    private int checkDebt(Borrow borrow, Date returnTime, Resource resource, User user, boolean check) {
         long firstMin = borrow.getDate().getTime() / 3600000;
         long secondMin = returnTime.getTime() / 3600000;
         long periodTime = secondMin - firstMin;
         if (check) {
-            resource.setDayOfBorrowed((int)Math.ceil(periodTime / 24.0));
+            resource.setDayOfBorrowed((int) Math.ceil(periodTime / 24.0));
         }
         if (user instanceof Student) {
             if (resource instanceof Book) {
@@ -176,7 +176,7 @@ public class Library {
             for (Borrow borrow : myBorrow) {
                 User user = users.get(borrow.getUserId());
                 Resource resource = resources.get(borrow.getResourceId());
-                if (checkDebt(borrow, date, resource, user,false) > 0) {
+                if (checkDebt(borrow, date, resource, user, false) > 0) {
                     values.add(borrow.getResourceId());
                 }
             }
@@ -202,12 +202,13 @@ public class Library {
         if (itsBorrow == null) {
             return -1;
         }
-        int debt = checkDebt(itsBorrow, borrow.getDate(), resource, user,true);
+        int debt = checkDebt(itsBorrow, borrow.getDate(), resource, user, true);
         user.setDebt(debt);
         borrows.remove(itsBorrow);
         resource.increaseRealNumber();
         return debt;
     }
+
     public StringBuilder reportPassedDeadLine(Date date, HashMap<String, User> users) {
         HashSet<String> values = hasDelay(date, users);
         if (values == null) {
@@ -229,9 +230,9 @@ public class Library {
         int bookNum = 0, thesisNum = 0, ganjineNum = 0, sellingBookNum = 0, borrowedBook = 0, borrowedThesis = 0;
         for (Resource resource : resources.values()) {
             if (resource instanceof Thesis) {
-                thesisNum+=resource.getRealNum();
+                thesisNum += resource.getRealNum();
             } else if (resource instanceof GanjineBook) {
-                ganjineNum+=resource.getRealNum();
+                ganjineNum += resource.getRealNum();
             } else if (resource instanceof SellingBook) {
                 sellingBookNum += resource.getRealNum();
             } else if (resource instanceof Book) {
@@ -243,7 +244,7 @@ public class Library {
             if (resource instanceof Book) {
                 borrowedBook += resource.getNumber() - resource.getRealNum();
             } else if (resource instanceof Thesis) {
-                borrowedThesis+=resource.getNumber() - resource.getRealNum();
+                borrowedThesis += resource.getNumber() - resource.getRealNum();
             }
         }
         return "" + bookNum + " " + thesisNum + " " + borrowedBook + " " + borrowedThesis + " " + ganjineNum + " " + sellingBookNum;
@@ -256,9 +257,9 @@ public class Library {
                 {
                     if (resource.getCategoryId().equals("null"))
                         if (resource instanceof Thesis) {
-                            hold[0]+=resource.getRealNum();
+                            hold[0] += resource.getRealNum();
                         } else if (resource instanceof GanjineBook) {
-                            hold[1]+=resource.getRealNum();
+                            hold[1] += resource.getRealNum();
                         } else if (resource instanceof SellingBook) {
                             hold[2] += resource.getRealNum();
                         } else if (resource instanceof Book) {
@@ -277,7 +278,7 @@ public class Library {
             {
                 if (resource.getCategoryId().equals(categoryId))
                     if (resource instanceof Thesis) {
-                        hold[0]+= resource.getRealNum();
+                        hold[0] += resource.getRealNum();
                     } else if (resource instanceof GanjineBook) {
                         hold[1] += resource.getRealNum();
                     } else if (resource instanceof SellingBook) {
@@ -343,8 +344,7 @@ public class Library {
         return holdBook.getId() + " " + holdBook.getNumOfBorrowed() + " " + holdBook.getDayOfBorrowed() + "\n"
                 + holdThesis.getId() + " " + holdThesis.getNumOfBorrowed() + " " + holdThesis.getDayOfBorrowed();
     }
-
-    public String reportSelling(HashMap<String, User> users,String libraryId) {
+    public String reportSelling(HashMap<String, User> users, String libraryId) {
         int num = 0;
         int price = 0;
         int maxSell = 0;
@@ -363,7 +363,7 @@ public class Library {
             }
         }
         SellingBook sell = (SellingBook) res;
-        return num + " " + price/100 + "\n"
-                + res.getId() + " " + maxSell + " " +( maxSell * Integer.parseInt(sell.getPrice()) * (100 - Integer.parseInt(sell.getDiscount())))/100;
+        return num + " " + price / 100 + "\n"
+                + res.getId() + " " + maxSell + " " + (maxSell * Integer.parseInt(sell.getPrice()) * (100 - Integer.parseInt(sell.getDiscount()))) / 100;
     }
 }
