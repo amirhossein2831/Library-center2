@@ -343,4 +343,27 @@ public class Library {
         return holdBook.getId() + " " + holdBook.getNumOfBorrowed() + " " + holdBook.getDayOfBorrowed() + "\n"
                 + holdThesis.getId() + " " + holdThesis.getNumOfBorrowed() + " " + holdThesis.getDayOfBorrowed();
     }
+
+    public String reportSelling(HashMap<String, User> users,String libraryId) {
+        int num = 0;
+        int price = 0;
+        int maxSell = 0;
+        int maxSellPrice = 0;
+        int x;
+        Resource res = null;
+        for (Resource resource : resources.values()) {
+            if (resource instanceof SellingBook) {
+                x = resource.getNumber() - resource.getRealNum();
+                num += x;
+                price += x * (Integer.parseInt(((SellingBook) resource).getPrice()) * (100 - Integer.parseInt(((SellingBook) resource).getDiscount())));
+                if (x >= maxSell) {
+                    maxSell = x;
+                    res = resource;
+                }
+            }
+        }
+        SellingBook sell = (SellingBook) res;
+        return num + " " + price/100 + "\n"
+                + res.getId() + " " + maxSell + " " +( maxSell * Integer.parseInt(sell.getPrice()) * (100 - Integer.parseInt(sell.getDiscount())))/100;
+    }
 }
