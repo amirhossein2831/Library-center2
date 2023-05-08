@@ -392,4 +392,24 @@ public class Center {
         }
         return "" + allDebt;
     }
+
+    public String reportPassedDeadLine(String userId, String pass, String libraryId, Date date) {
+        User user = users.get(userId);
+        if (user == null) {
+            return "not-found";
+        } else if (!user.getPass().equals(pass)) {
+            return "invalid-pass";
+        }
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        if (!(user instanceof Manager)) {
+            return "permission-denied";
+        }
+        if (!((Manager) user).getLibraryId().equals(libraryId)) {
+            return "permission-denied";
+        }
+       return library.reportPassedDeadLine(date);
+    }
 }
