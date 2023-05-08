@@ -433,4 +433,27 @@ public class Center {
         }
         return library.libraryReport();
     }
+
+    public String categoryReport(String userId,String pass,String categoryId,String libraryId) {
+        User user = users.get(userId);
+        if (user == null) {
+            return "not-found";
+        } else if (!user.getPass().equals(pass)) {
+            return "invalid-pass";
+        }
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        if (categories.get(categoryId) == null) {
+            return "not-found";
+        }
+        if (!(user instanceof Manager)) {
+            return "permission-denied";
+        }
+        if (!((Manager) user).getLibraryId().equals(libraryId)) {
+            return "permission-denied";
+        }
+        return library.categoryReport(categoryId);
+    }
 }

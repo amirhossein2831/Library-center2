@@ -231,9 +231,9 @@ public class Library {
             } else if (resource instanceof GanjineBook) {
                 ganjineNum++;
             } else if (resource instanceof SellingBook) {
-                sellingBookNum++;
+                sellingBookNum+= resource.getNumber();
             } else if (resource instanceof Book) {
-                bookNum++;
+                bookNum += resource.getNumber();
             }
         }
         for (String resourceId : borrows.keySet()) {
