@@ -28,7 +28,6 @@ public class Borrow {
             setUserType("student");
         }
     }
-
     public void evaluateResourceType(HashMap<String, Resource> resources) {
         Resource resource = resources.get(getUserId());
         if (resource instanceof Book) {
