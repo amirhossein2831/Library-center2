@@ -74,6 +74,11 @@ public class Parser {
                 break;
             case "report-penalties-sum":
                 reportPenalties(args[0], args[1]);
+                break;
+            case "report-passed-deadline":
+                reportPassedDeadLine(args[0], args[1], args[2], args[3], args[4]);
+                break;
+                
         }
     }
 
@@ -171,6 +176,12 @@ public class Parser {
 
     public void reportPenalties(String userId, String pass) {
         System.out.println(center.reportPenalties(userId, pass));
+    }
+
+    public void reportPassedDeadLine(String userId, String pass, String libraryId, String strDate, String hour) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
+        System.out.println(center.reportPassedDeadLine(userId, pass, libraryId, date));
+
     }
 }
 
