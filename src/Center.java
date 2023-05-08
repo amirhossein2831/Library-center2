@@ -393,23 +393,24 @@ public class Center {
         return "" + allDebt;
     }
 
-    public String reportPassedDeadLine(String userId, String pass, String libraryId, Date date) {
+    public StringBuilder reportPassedDeadLine(String userId, String pass, String libraryId, Date date) {
         User user = users.get(userId);
         if (user == null) {
-            return "not-found";
+            return new StringBuilder("not-found");
         } else if (!user.getPass().equals(pass)) {
-            return "invalid-pass";
+            return new StringBuilder("invalid-pass");
         }
         Library library = libraries.get(libraryId);
         if (library == null) {
-            return "not-found";
+            return new StringBuilder("not-found");
         }
         if (!(user instanceof Manager)) {
-            return "permission-denied";
+            return new StringBuilder("permission-denied");
         }
         if (!((Manager) user).getLibraryId().equals(libraryId)) {
-            return "permission-denied";
+            return new StringBuilder("permission-denied");
         }
-       return library.reportPassedDeadLine(date);
+
+       return library.reportPassedDeadLine(date,users);
     }
 }
