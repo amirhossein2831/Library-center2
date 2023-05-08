@@ -94,7 +94,6 @@ public class Center {
         users.remove(id);
         return "success";
     }
-
     public String addResource(String managerId, String managerPass, Resource resource) {
         User manager = users.get(managerId);
         String answer = isManager(manager, managerPass, resource.getLibraryId());
@@ -484,5 +483,26 @@ public class Center {
             return "permission-denied";
         }
         return library.reportMostPopular();
+    }
+
+    public String reportSelling(String userId, String pass, String libraryId) {
+        User user = users.get(userId);
+        if (user == null) {
+            return "not-found";
+        } else if (!user.getPass().equals(pass)) {
+            return "invalid-pass";
+        }
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+
+        if (!(user instanceof Manager)) {
+            return "permission-denied";
+        }
+        if (!((Manager) user).getLibraryId().equals(libraryId)) {
+            return "permission-denied";
+        }
+        return library.reportSelling();
     }
 }
