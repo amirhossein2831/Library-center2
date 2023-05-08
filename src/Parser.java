@@ -81,6 +81,9 @@ public class Parser {
             case "library-report":
                 libraryReport(args[0], args[1], args[2]);
                 break;
+            case "category-report":
+                categoryReport(args[0], args[1], args[2], args[3]);
+                break;
         }
     }
 
@@ -187,6 +190,10 @@ public class Parser {
 
     public void libraryReport(String userId, String pass, String libraryId) {
         System.out.println(center.libraryReport(userId, pass, libraryId));
+    }
+
+    public void categoryReport(String userId, String pass, String categoryId, String libraryId) {
+        System.out.println(center.categoryReport(userId, pass, categoryId, libraryId));
     }
 }
 

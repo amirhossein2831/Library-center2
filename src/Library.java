@@ -246,5 +246,4 @@ public class Library {
         }
         return "" + bookNum + " " + thesisNum + " " + borrowedBook + " " + borrowedThesis + " " + ganjineNum + " " + sellingBookNum;
     }
-
 }
