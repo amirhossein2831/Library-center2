@@ -425,6 +425,12 @@ public class Center {
         if (library == null) {
             return "not-found";
         }
+        if (!(user instanceof Manager)) {
+            return "permission-denied";
+        }
+        if (!((Manager) user).getLibraryId().equals(libraryId)) {
+            return "permission-denied";
+        }
         return library.libraryReport();
     }
 }
