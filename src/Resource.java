@@ -81,6 +81,14 @@ public abstract class Resource {
         numOfBorrowed++;
     }
 
+    public int getNumOfBorrowed() {
+        return numOfBorrowed;
+    }
+
+    public int getDayOfBorrowed() {
+        return dayOfBorrowed;
+    }
+
     public void setDayOfBorrowed(int day) {
         dayOfBorrowed += day;
     }

@@ -104,7 +104,7 @@ public class Library {
                 borrows1.add(borrow);
                 borrows.put(borrow.getResourceId(), borrows1);
                 resource.decreaseRealNum();
-
+                resource.borrowed();
                 return true;
             }
             return false;
@@ -113,6 +113,7 @@ public class Library {
                 borrows1.add(borrow);
                 borrows.put(borrow.getResourceId(), borrows1);
                 resource.decreaseRealNum();
+                resource.borrowed();
                 return true;
             }
             return false;
@@ -120,10 +121,13 @@ public class Library {
         return false;                                       //the user in not student or staff
     }
 
-    private int checkDebt(Borrow borrow, Date returnTime, Resource resource, User user) {
+    private int checkDebt(Borrow borrow, Date returnTime, Resource resource, User user,boolean check) {
         long firstMin = borrow.getDate().getTime() / 3600000;
         long secondMin = returnTime.getTime() / 3600000;
         long periodTime = secondMin - firstMin;
+        if (check) {
+            resource.setDayOfBorrowed((int)Math.ceil(periodTime / 24.0));
+        }
         if (user instanceof Student) {
             if (resource instanceof Book) {
                 if (periodTime < (10 * 24)) {
@@ -156,7 +160,7 @@ public class Library {
             }
             for (Borrow borrow : myBorrow) {
                 if (borrow.getUserId().equals(userId)) {
-                    x += checkDebt(borrow, borrow1.getDate(), resource, user);
+                    x += checkDebt(borrow, borrow1.getDate(), resource, user, false);
                 }
             }
         }
@@ -172,7 +176,7 @@ public class Library {
             for (Borrow borrow : myBorrow) {
                 User user = users.get(borrow.getUserId());
                 Resource resource = resources.get(borrow.getResourceId());
-                if (checkDebt(borrow, date, resource, user) > 0) {
+                if (checkDebt(borrow, date, resource, user,false) > 0) {
                     values.add(borrow.getResourceId());
                 }
             }
@@ -198,7 +202,7 @@ public class Library {
         if (itsBorrow == null) {
             return -1;
         }
-        int debt = checkDebt(itsBorrow, borrow.getDate(), resource, user);
+        int debt = checkDebt(itsBorrow, borrow.getDate(), resource, user,true);
         user.setDebt(debt);
         borrows.remove(itsBorrow);
         resource.increaseRealNumber();
@@ -293,5 +297,51 @@ public class Library {
             hold[3] += temp[3];
         }
         return hold;
+    }
+
+    public String reportMostPopular() {
+        int x = 0;
+        int y = 0;
+        Resource holdBook = null;
+        Resource holdThesis = null;
+        for (Resource resource : resources.values()) {
+            if (resource instanceof Book) {
+                if (resource.getNumOfBorrowed() >= x) {
+                    x = resource.getNumOfBorrowed();
+                    holdBook = resource;
+                }
+            } else if (resource instanceof Thesis) {
+
+                if (resource.getNumOfBorrowed() >= y) {
+                    y = resource.getNumOfBorrowed();
+                    holdThesis = resource;
+                }
+            }
+        }
+        for (Resource resource : resources.values()) {
+            if (resource instanceof Book) {
+                if (resource.getNumOfBorrowed() == holdBook.getNumOfBorrowed()) {
+                    if (resource.getDayOfBorrowed() > holdBook.getDayOfBorrowed()) {
+                        holdBook = resource;
+                    }
+                }
+            } else if (resource instanceof Thesis) {
+                if (resource.getNumOfBorrowed() == holdThesis.getNumOfBorrowed()) {
+                    if (resource.getDayOfBorrowed() > holdThesis.getDayOfBorrowed()) {
+                        holdThesis = resource;
+                    }
+                }
+            }
+        }
+        if (holdBook.getNumOfBorrowed() == 0) {
+            return "null" + "\n"
+                    + holdThesis.getId() + " " + holdThesis.getNumOfBorrowed() + " " + holdThesis.getDayOfBorrowed();
+        }
+        if (holdThesis.getNumOfBorrowed() == 0) {
+            return holdBook.getId() + " " + holdBook.getNumOfBorrowed() + " " + holdBook.getDayOfBorrowed() + "\n"
+                    + "null";
+        }
+        return holdBook.getId() + " " + holdBook.getNumOfBorrowed() + " " + holdBook.getDayOfBorrowed() + "\n"
+                + holdThesis.getId() + " " + holdThesis.getNumOfBorrowed() + " " + holdThesis.getDayOfBorrowed();
     }
 }
