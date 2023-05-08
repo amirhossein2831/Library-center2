@@ -207,7 +207,7 @@ public class Parser {
     }
 
     public void reportSelling(String userId, String pass, String libraryId) {
-        System.out.println(Center.reportSelling(userId, pass, libraryId));
+        System.out.println(center.reportSelling(userId, pass, libraryId));
     }
 }
 

@@ -49,10 +49,6 @@ public abstract class Resource {
         return number;
     }
 
-    public void decreaseNumber() {
-        number--;
-    }
-
     public void addComment(String comment) {
         this.comment.add(comment);
     }

@@ -37,4 +37,8 @@ public class Professor extends User implements Buy, Read, Comment {
     public void addComment(String comment,Resource resource) {
         resource.addComment(comment);
     }
+
+    public ArrayList<SellingBook> getBuys() {
+        return buys;
+    }
 }
