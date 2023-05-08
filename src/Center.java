@@ -374,4 +374,22 @@ public class Center {
         }
         return str;
     }
+
+    public String reportPenalties(String userId, String pass) {
+        User user = users.get(userId);
+        if (user == null) {
+            return "not-found";
+        } else if (!user.getPass().equals(pass)) {
+
+            return "invalid-pass";
+        }
+        if (!(user instanceof Admin)) {
+            return "permission-denied";
+        }
+        int allDebt = 0;
+        for (User u : users.values()) {
+            allDebt += u.getDebt();
+        }
+        return "" + allDebt;
+    }
 }
