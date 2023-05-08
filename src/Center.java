@@ -36,13 +36,18 @@ public class Center {
         if (categories.get(category.getId()) != null) {
             return "duplicate-id";
         }
-        if (!category.getParentId().equals("null") && categories.get(category.getParentId()) == null) {
+        Category parentCat = categories.get(category.getParentId());
+        if (!category.getParentId().equals("null") && parentCat == null) {
             return "not-found";
         }
+        if (category.getParentId().equals("null")) {
+            categories.put(category.getId(), category);
+            return "success";
+        }
+        parentCat.setSubs(category.getId());
         categories.put(category.getId(), category);
         return "success";
     }
-
     public String addUser(String adminId, String adminPass, User user) {
         User admin = users.get(adminId);
         String answer = isAdmin(admin, adminPass);
@@ -262,6 +267,7 @@ public class Center {
         Buy action = (Buy) user;
         action.buy((SellingBook) resource);
         resource.decreaseNumber();
+        resource.decreaseRealNum();
         return "success";
     }
 
@@ -445,15 +451,17 @@ public class Center {
         if (library == null) {
             return "not-found";
         }
-        if (categories.get(categoryId) == null) {
-            return "not-found";
-        }
+
         if (!(user instanceof Manager)) {
             return "permission-denied";
         }
         if (!((Manager) user).getLibraryId().equals(libraryId)) {
             return "permission-denied";
         }
-        return library.categoryReport(categoryId);
+        int [] hold = library.categoryReport(categories,categoryId);
+        if (hold == null) {
+            return "not-found";
+        }
+        return hold[3] + " " + hold[0] + " " + hold[1] + " " + hold[2];
     }
 }
