@@ -16,4 +16,8 @@ public class Student extends User implements Buy,Comment {
     public void addComment(String comment,Resource resource) {
         resource.addComment(comment);
     }
+
+    public ArrayList<SellingBook> getBuys() {
+        return buys;
+    }
 }

@@ -10,4 +10,8 @@ public class Staff extends User implements Buy {
     public void buy(SellingBook sellingBook) {
         buys.add(sellingBook);
     }
+
+    public ArrayList<SellingBook> getBuys() {
+        return buys;
+    }
 }
