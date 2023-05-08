@@ -413,4 +413,18 @@ public class Center {
 
        return library.reportPassedDeadLine(date,users);
     }
+
+    public String libraryReport(String userId, String pass, String libraryId) {
+        User user = users.get(userId);
+        if (user == null) {
+            return "not-found";
+        } else if (!user.getPass().equals(pass)) {
+            return "invalid-pass";
+        }
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        return library.libraryReport();
+    }
 }
