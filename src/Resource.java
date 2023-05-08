@@ -7,6 +7,7 @@ public abstract class Resource {
     private final String categoryId;
     private final String libraryId;
     private int number;
+    private int realNum;
     private ArrayList<String> comment;
 
     public Resource(String id, String subject, String authorName, String categoryId, String libraryId,int number) {
@@ -17,6 +18,7 @@ public abstract class Resource {
         this.libraryId = libraryId;
         this.number = number;
         comment = new ArrayList<>();
+        realNum = this.number;
     }
 
     public String getId() {
@@ -58,5 +60,17 @@ public abstract class Resource {
             return new StringBuilder(this.getId());
         }
         return new StringBuilder();
+    }
+
+    public int getRealNum() {
+        return realNum;
+    }
+
+    public void decreaseRealNum() {
+        realNum--;
+    }
+
+    public void increaseRealNumber() {
+        realNum++;
     }
 }
