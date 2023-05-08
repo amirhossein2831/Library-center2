@@ -10,6 +10,7 @@ public abstract class Resource {
     private int realNum;
     private ArrayList<String> comment;
     private int numOfBorrowed;
+    private int dayOfBorrowed;
 
     public Resource(String id, String subject, String authorName, String categoryId, String libraryId,int number) {
         this.id = id;
@@ -21,6 +22,7 @@ public abstract class Resource {
         comment = new ArrayList<>();
         realNum = this.number;
         numOfBorrowed = 0;
+        dayOfBorrowed = 0;
     }
 
     public String getId() {
@@ -75,8 +77,11 @@ public abstract class Resource {
     public void increaseRealNumber() {
         realNum++;
     }
-
     public void borrowed() {
         numOfBorrowed++;
+    }
+
+    public void setDayOfBorrowed(int day) {
+        dayOfBorrowed += day;
     }
 }
