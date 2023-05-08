@@ -260,12 +260,11 @@ public class Center {
         if (user.getDebt() != 0) {
             return "not-allowed";
         }
-        if (resource.getNumber() == 0) {
+        if (resource.getRealNum() == 0) {
             return "not-allowed";
         }
         Buy action = (Buy) user;
         action.buy((SellingBook) resource);
-        resource.decreaseNumber();
         resource.decreaseRealNum();
         return "success";
     }
@@ -503,6 +502,6 @@ public class Center {
         if (!((Manager) user).getLibraryId().equals(libraryId)) {
             return "permission-denied";
         }
-        return library.reportSelling();
+         return library.reportSelling(users,libraryId);
     }
 }
