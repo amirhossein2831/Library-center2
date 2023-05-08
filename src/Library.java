@@ -225,7 +225,6 @@ public class Library {
         }
         return str;
     }
-
     public String libraryReport() {
         int bookNum = 0, thesisNum = 0, ganjineNum = 0, sellingBookNum = 0, borrowedBook = 0, borrowedThesis = 0;
         for (Resource resource : resources.values()) {

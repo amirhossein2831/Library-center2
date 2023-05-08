@@ -87,6 +87,9 @@ public class Parser {
             case "report-most-popular":
                 reportMostPopular(args[0], args[1], args[2]);
                 break;
+            case "report-sell":
+                reportSelling(args[0], args[1], args[2]);
+                break;
         }
     }
 
@@ -201,6 +204,10 @@ public class Parser {
 
     public void reportMostPopular(String userId,String pass,String libraryId) {
         System.out.println(center.reportMostPopular(userId, pass, libraryId));
+    }
+
+    public void reportSelling(String userId, String pass, String libraryId) {
+        System.out.println(Center.reportSelling(userId, pass, libraryId));
     }
 }
 
