@@ -92,7 +92,7 @@ public class Center {
         return "success";
     }
     public String removeResource(String managerId, String managerPass, String resourceID, String libraryId) {
-        Rule rule = new Rule(managerId, managerPass, resourceID, users, libraries);
+        Rule rule = new Rule(managerId, managerPass,libraryId, users, libraries);
         if (rule.getLibrary().getResources().get(resourceID) == null) {
             return "not-found";
         }
