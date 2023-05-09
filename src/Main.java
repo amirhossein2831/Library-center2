@@ -8,7 +8,15 @@ public class Main {
         Parser parser = new Parser();
         while (!input.equals("finish")) {
             input = scanner.nextLine();
-            parser.parsCommand(input);
+            try {
+                parser.parsCommand(input);
+            } catch (NotFoundException e) {
+                System.out.println(e.getMessage());
+            } catch (InvalidPassException e) {
+                System.out.println(e.getMessage());
+            } catch (PermissionDeniedException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
