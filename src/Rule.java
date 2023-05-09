@@ -6,7 +6,37 @@ public class Rule {
     private Library library;
     private HashMap<String, Library> libraries;
     private Resource resource;
+    public Rule(String userId, String pass, HashMap<String, User> users) {
+        setUsers(users);
+        isAdmin(userId, pass);
+        this.user = users.get(userId);
+    }
+    public Rule(String userId,String pass,String libraryId,HashMap<String, User> users,HashMap<String, Library> libraries) {
+        setUsers(users);
+        setLibraries(libraries);
+        isManager(userId, pass, libraryId);
+        this.user = users.get(userId);
+        this.library = libraries.get(libraryId);
 
+    }
+    public Rule(String userId,String pass,String libraryId,String resourceId,HashMap<String, User> users,HashMap<String, Library> libraries){
+        setUsers(users);
+        setLibraries(libraries);
+        checkLibrary(userId, pass, libraryId, resourceId);
+        this.user = users.get(userId);
+        this.library = libraries.get(libraryId);
+        this.resource = library.getResource(resourceId);
+    }
+    private void isAdmin(String userId, String adminPass) {
+        if (users.get(userId) == null) {
+            throw new NotFoundException();
+        } else if (!(users.get(userId) instanceof Admin)) {
+            throw new PermissionDeniedException();
+        }
+        if (!users.get(userId).getPass().equals(adminPass)) {
+            throw new InvalidPassException();
+        }
+    }
     private void isManager(String userId, String pass, String libraryId) {
         if (users.get(userId) == null) {
             throw new NotFoundException();
@@ -21,16 +51,6 @@ public class Rule {
         }
         if (!((Manager) users.get(userId)).getLibraryId().equals(libraryId)) {
             throw new PermissionDeniedException();
-        }
-    }
-    private void isAdmin(String userId, String adminPass) {
-        if (users.get(userId) == null) {
-            throw new NotFoundException();
-        } else if (!(users.get(userId) instanceof Admin)) {
-            throw new PermissionDeniedException();
-        }
-        if (!users.get(userId).getPass().equals(adminPass)) {
-            throw new InvalidPassException();
         }
     }
     private void checkLibrary(String userId, String pass, String libraryId, String resourceId) {
