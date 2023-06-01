@@ -1,3 +1,5 @@
+package com.Library.Models.Resources;
+
 public class Thesis extends Resource {
     private final String advisor;
     private final String defYear;

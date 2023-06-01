@@ -1,4 +1,13 @@
-import javax.xml.crypto.Data;
+package com.Library.Models;
+
+import com.Library.Models.Resources.Book;
+import com.Library.Models.Resources.Resource;
+import com.Library.Models.Resources.Thesis;
+import com.Library.Models.Users.Professor;
+import com.Library.Models.Users.Staff;
+import com.Library.Models.Users.Student;
+import com.Library.Models.Users.User;
+
 import java.util.Date;
 import java.util.HashMap;
 

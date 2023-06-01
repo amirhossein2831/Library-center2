@@ -1,3 +1,5 @@
+package com.Library.Models.Resources;
+
 public class Book extends Resource {
     private final String publisher;
     private final String year;

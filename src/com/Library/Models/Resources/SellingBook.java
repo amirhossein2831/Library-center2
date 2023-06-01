@@ -1,3 +1,5 @@
+package com.Library.Models.Resources;
+
 public class SellingBook extends Book {
     private final String price;
     private final String discount;

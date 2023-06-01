@@ -1,3 +1,5 @@
+package com.Library.Models.Resources;
+
 import java.util.Date;
 
 public class GanjineBook extends Resource {

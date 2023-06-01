@@ -1,7 +1,11 @@
+package com.Library.Models.Users;
+
+import com.Library.Models.Interface.SearchUser;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public abstract class User implements SearchUser{
+public abstract class User implements SearchUser {
     private final String id;
     private final String pass;
     private final String firstName;

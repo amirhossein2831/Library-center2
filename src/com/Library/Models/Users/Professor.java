@@ -1,6 +1,15 @@
+package com.Library.Models.Users;
+
+import com.Library.Models.Interface.Buy;
+import com.Library.Models.Interface.Comment;
+import com.Library.Models.Interface.Read;
+import com.Library.Models.Resources.GanjineBook;
+import com.Library.Models.Resources.Resource;
+import com.Library.Models.Resources.SellingBook;
+import com.Library.Models.Users.User;
+
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 public class Professor extends User implements Buy, Read, Comment {
     private ArrayList<SellingBook> buys;
@@ -34,7 +43,7 @@ public class Professor extends User implements Buy, Read, Comment {
         return periodTime >= 2;
     }
     @Override
-    public void addComment(String comment,Resource resource) {
+    public void addComment(String comment, Resource resource) {
         resource.addComment(comment);
     }
 

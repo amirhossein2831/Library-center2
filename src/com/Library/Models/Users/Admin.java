@@ -1,5 +1,9 @@
+package com.Library.Models.Users;
+
+import com.Library.Models.Interface.Buy;
+import com.Library.Models.Resources.SellingBook;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Admin extends User implements Buy {
     private ArrayList<SellingBook> buys;

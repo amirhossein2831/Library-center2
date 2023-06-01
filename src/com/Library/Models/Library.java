@@ -1,3 +1,13 @@
+package com.Library.Models;
+
+import com.Library.Models.Borrow;
+import com.Library.Models.Category;
+import com.Library.Models.Resources.*;
+import com.Library.Models.Users.Professor;
+import com.Library.Models.Users.Staff;
+import com.Library.Models.Users.Student;
+import com.Library.Models.Users.User;
+
 import java.util.*;
 
 public class Library {

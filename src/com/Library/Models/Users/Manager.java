@@ -1,4 +1,6 @@
-public class Manager extends Staff  {
+package com.Library.Models.Users;
+
+public class Manager extends Staff {
     private final String libraryId;
 
     public Manager(String id, String pass, String firstName, String lastName, String nationalId, String year, String address, String libraryId) {

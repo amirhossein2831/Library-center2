@@ -1,7 +1,13 @@
-import java.util.ArrayList;
-import java.util.HashSet;
+package com.Library.Models.Users;
 
-public class Student extends User implements Buy,Comment {
+import com.Library.Models.Interface.Buy;
+import com.Library.Models.Interface.Comment;
+import com.Library.Models.Resources.Resource;
+import com.Library.Models.Resources.SellingBook;
+
+import java.util.ArrayList;
+
+public class Student extends User implements Buy, Comment {
     private ArrayList<SellingBook> buys;
 
     public Student(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
@@ -13,7 +19,7 @@ public class Student extends User implements Buy,Comment {
         buys.add(sellingBook);
     }
     @Override
-    public void addComment(String comment,Resource resource) {
+    public void addComment(String comment, Resource resource) {
         resource.addComment(comment);
     }
 
