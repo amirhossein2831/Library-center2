@@ -1,6 +1,5 @@
 package com.Library.Compunent.Router;
 
-import com.Library.Compunent.Parser.Parser;
 import com.Library.Compunent.Reflection.Reflection;
 import com.Library.Controller.Controller;
 
@@ -8,13 +7,26 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class Route {
+    private final Reflection controllerReflect;
     private HashMap<String, String> route;
 
-    public Route() {
+    public Route() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        controllerReflect = new Reflection(Controller.class);
         fetchRoute();
     }
 
+    public void routing(String methodName, String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        if (!route.containsKey(methodName)) {
+            System.out.println("invalid route");
+            return;
+        }
+
+        String method = route.get(methodName);
+        controllerReflect.call(Controller.class, method, args);
+    }
+
     public void fetchRoute() {
+        // Define all Route here
         route = new HashMap<>() {{
             put("add-library", "addLibrary");
             put("add-category", "addCategory");
@@ -41,23 +53,5 @@ public class Route {
             put("report-most-popular", "reportMostPopular");
             put("report-sell", "reportSelling");
         }};
-    }
-
-    public void routing(String methodName, String[] args) throws
-            InvocationTargetException,
-            NoSuchMethodException,
-            InstantiationException,
-            IllegalAccessException {
-        if (!route.containsKey(methodName)) {
-            System.out.println("invalid route");
-            return;
-        }
-
-        String method = route.get(methodName);
-        Reflection.call(Controller.class, method, args);
-    }
-
-    public HashMap<String, String> getRoute() {
-        return route;
     }
 }
