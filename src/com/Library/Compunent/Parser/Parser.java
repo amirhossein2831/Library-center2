@@ -8,16 +8,11 @@ public class Parser {
 
     private final Route router;
 
-    public Parser() {
+    public Parser() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         router = new Route();
     }
 
-    public void parsCommand(String input) throws
-            ClassNotFoundException,
-            InvocationTargetException,
-            NoSuchMethodException,
-            InstantiationException,
-            IllegalAccessException {
+    public void parsCommand(String input) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         String[] command = input.split("#");
         if (command.length < 2) {
             System.out.println("invalid input");
