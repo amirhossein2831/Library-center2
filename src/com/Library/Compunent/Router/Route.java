@@ -60,12 +60,12 @@ public class Route {
             put("add-comment", "addComment");
             put("search", "search");
             put("search-user", "searchUser");
-            put("report-penalties-sum", "reportPenalties");
-            put("report-passed-deadline", "reportPassedDeadLine");
-            put("library-report", "libraryReport");
-            put("category-report", "categoryReport");
-            put("report-most-popular", "reportMostPopular");
-            put("report-sell", "reportSelling");
+            put("report-penalties-sum", "com.Library.Controller.AdminController@reportPenalties");
+            put("report-passed-deadline", "com.Library.Controller.ManagerController@reportPassedDeadLine");
+            put("library-report", "com.Library.Controller.ManagerController@libraryReport");
+            put("category-report", "com.Library.Controller.ManagerController@categoryReport");
+            put("report-most-popular", "com.Library.Controller.ManagerController@reportMostPopular");
+            put("report-sell", "com.Library.Controller.ManagerController@reportSelling");
         }};
     }
 }

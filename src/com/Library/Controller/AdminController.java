@@ -86,4 +86,12 @@ public class AdminController extends BaseController {
         LibraryCenter.getUsers().remove(args[2]);
         return "success";
     }
+
+    public String reportPenalties(String[] args) {
+        int allDebt = 0;
+        for (User u : LibraryCenter.getUsers().values()) {
+            allDebt += u.getDebt();
+        }
+        return "" + allDebt;
+    }
 }
