@@ -17,9 +17,9 @@ public class Main {
         while (!input.equals("finish")) {
             try {
                 parser.parsCommand(input);
-            } catch (NotFoundException | InvalidPassException | PermissionDeniedException e) {
+            } catch (NotFoundException | InvalidPassException | PermissionDeniedException | InvocationTargetException e) {
                 System.out.println(e.getMessage());
-            } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+            } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
             input = scanner.nextLine();
