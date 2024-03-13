@@ -1,7 +1,6 @@
 package com.Library.Controller;
 
 import com.Library.Models.Borrow;
-import com.Library.Models.Category;
 import com.Library.Models.Interface.Buy;
 import com.Library.Models.Interface.Comment;
 import com.Library.Models.Interface.Read;
@@ -15,7 +14,7 @@ import com.Library.Compunent.Rule.Rule;
 
 import java.util.*;
 
-public class Center extends BaseController{
+public class ManagerController extends BaseController{
     public String addResource(String managerId, String managerPass, Resource resource) {
         Rule rule = new Rule(managerId, managerPass, resource.getLibraryId(), users, libraries);
         return checkResource(resource);

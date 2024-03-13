@@ -6,11 +6,10 @@ import com.Library.Models.Library;
 import com.Library.Models.Users.*;
 
 public class AdminController extends BaseController {
-
-
     public AdminController() {
         super();
     }
+
     public String addLibrary(String[] args) {
         Library library = new Library(args[2], args[3], args[4], Integer.parseInt(args[5]), args[6]);
         Rule rule = new Rule(args[0], args[1], users);
@@ -46,6 +45,7 @@ public class AdminController extends BaseController {
         Rule rule = new Rule(args[0], args[1], users);
         return checkUser(student);
     }
+
     private String checkUser(User user) {
         if (user instanceof Manager) {
             Manager manager = (Manager) user;
@@ -73,7 +73,8 @@ public class AdminController extends BaseController {
         } else {
             Professor professor = new Professor(args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
             Rule rule = new Rule(args[0], args[1], users);
-            return checkUser(professor);        }
+            return checkUser(professor);
+        }
     }
 
     public String addManager(String[] args) {

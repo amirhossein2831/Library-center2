@@ -44,11 +44,11 @@ public class Route {
             put("add-staff", "com.Library.Controller.AdminController@addStaff");
             put("add-manager", "com.Library.Controller.AdminController@addManager");
             put("remove-user", "com.Library.Controller.AdminController@removeUser");
-            put("add-book", "addBook");
-            put("add-thesis", "addThesis");
-            put("add-ganjineh-book", "addGanjine");
-            put("add-selling-book", "addSellingBook");
-            put("remove-resource", "removeResource");
+            put("add-book", "com.Library.Controller.AdminController@addBook");
+            put("add-thesis", "com.Library.Controller.AdminController@addThesis");
+            put("add-ganjineh-book", "com.Library.Controller.AdminController@addGanjine");
+            put("add-selling-book", "com.Library.Controller.AdminController@addSellingBook");
+            put("remove-resource", "com.Library.Controller.AdminController@removeResource");
             put("borrow", "borrow");
             put("return", "returning");
             put("buy", "buy");
