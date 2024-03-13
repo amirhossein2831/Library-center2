@@ -17,11 +17,7 @@ public class Main {
             input = scanner.nextLine();
             try {
                 parser.parsCommand(input);
-            } catch (NotFoundException e) {
-                System.out.println(e.getMessage());
-            } catch (InvalidPassException e) {
-                System.out.println(e.getMessage());
-            } catch (PermissionDeniedException e) {
+            } catch (NotFoundException | InvalidPassException | PermissionDeniedException e) {
                 System.out.println(e.getMessage());
             }
         }
