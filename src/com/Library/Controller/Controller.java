@@ -21,39 +21,7 @@ public class Controller {
     public Controller() {
         center = new Center();
     }
-    public void addLibrary(String[] args) {
-        Library library = new Library(args[2], args[3], args[4], Integer.parseInt(args[5]), args[6]);
-        System.out.println(center.addLibrary(args[0], args[1], library));
-    }
 
-    public void addCategory(String[] args) {
-        Category category = new Category(args[2], args[3], args[4]);
-        System.out.println(center.addCategory(args[0], args[1], category));
-    }
-
-    public void addStudent(String[] args) {
-        Student student = new Student(args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-        System.out.println(center.addUser(args[0], args[1], student));
-    }
-
-    public void addStaff(String[] args) {
-        if (args[9].equals("staff")) {
-            Staff staff = new Staff(args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-            System.out.println(center.addUser(args[0], args[1], staff));
-        } else {
-            Professor professor = new Professor(args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-            System.out.println(center.addUser(args[0], args[1], professor));
-        }
-    }
-
-    public void addManager(String[] args) {
-        Manager manager = new Manager(args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
-        System.out.println(center.addUser(args[0], args[1], manager));
-    }
-
-    public void removeUser(String[] args) {
-        System.out.println(center.removeUser(args[0], args[1], args[2]));
-    }
 
     public void addBook(String[] args) {
         Book book = new Book(args[2], args[3], args[4], args[8], args[9], args[5], Integer.parseInt(args[7]), args[6]);

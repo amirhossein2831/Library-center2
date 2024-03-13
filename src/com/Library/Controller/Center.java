@@ -15,78 +15,7 @@ import com.Library.Compunent.Rule.Rule;
 
 import java.util.*;
 
-public class Center {
-    private final HashMap<String, Library> libraries;
-    private final HashMap<String, Category> categories;
-    private HashMap<String, User> users;
-    public Center() {
-        libraries = new HashMap<>();
-        categories = new HashMap<>();
-        users = new HashMap<>();
-        Admin admin = new Admin("admin", "AdminPass", "AmirHossein", "Motaghian", "000000000", "19", "Tehran,AUT");
-        users.put(admin.getId(), admin);
-    }
-    public String addLibrary(String adminId, String adminPass, Library library) {
-        Rule rule = new Rule(adminId, adminPass, users);
-        if (libraries.get(library.getId()) != null) {
-            return "duplicate-id";
-        }
-        libraries.put(library.getId(), library);
-        return "success";
-    }
-    public String addCategory(String adminId, String adminPass, Category category) {
-        Rule rule = new Rule(adminId, adminPass, users);
-        if (categories.get(category.getId()) != null) {
-            return "duplicate-id";
-        }
-        Category parentCat = categories.get(category.getParentId());
-        if (!category.getParentId().equals("null") && parentCat == null) {
-            return "not-found";
-        }
-        if (category.getParentId().equals("null")) {
-            categories.put(category.getId(), category);
-            return "success";
-        }
-        parentCat.setSubs(category.getId());
-        categories.put(category.getId(), category);
-        return "success";
-    }
-    public String addUser(String adminId, String adminPass, User user) {
-        Rule rule = new Rule(adminId, adminPass, users);
-        return checkUser(user);
-    }
-    private String checkUser(User user) {
-        if (user instanceof Manager) {
-            Manager manager = (Manager) user;
-            if (users.get(manager.getId()) != null) {
-                return "duplicate-id";
-            }
-            if (libraries.get(manager.getLibraryId()) == null) {
-                return "not-found";
-            }
-            users.put(manager.getId(), manager);
-            return "success";
-        }
-        if (users.get(user.getId()) != null) {
-            return "duplicate-id";
-        }
-        users.put(user.getId(), user);
-        return "success";
-    }
-    public String removeUser(String adminId, String adminPass, String id) {
-        Rule rule = new Rule(adminId, adminPass, users);
-        if (users.get(id) == null) {
-            return "not-found";
-        }
-        if (users.get(id).getDebt() != 0) {
-            return "not-allowed";
-        }
-        if (countBorrow(id) != 0) {
-            return "not-allowed";
-        }
-        users.remove(id);
-        return "success";
-    }
+public class Center extends BaseController{
     public String addResource(String managerId, String managerPass, Resource resource) {
         Rule rule = new Rule(managerId, managerPass, resource.getLibraryId(), users, libraries);
         return checkResource(resource);
@@ -116,13 +45,7 @@ public class Center {
         rule.getLibrary().getResources().remove(resourceID);
         return "success";
     }
-    private int countBorrow(String userId) {
-        int x = 0;
-        for (Library library : libraries.values()) {
-            x += library.countBorrow(userId);
-        }
-        return x;
-    }
+
     private boolean checkDelay(Borrow borrow, Resource resource, User user) {
         for (Library library : libraries.values()) {
             if (library.hasDelay(borrow, resource, user, borrow.getUserId())) {
