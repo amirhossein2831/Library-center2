@@ -3,14 +3,16 @@ package com.Library.Compunent.Exception;
 import java.util.HashMap;
 
 public class Route {
-    private HashMap<String,String> route;
+    private HashMap<String, String> route;
 
     public Route() {
-        this.route = new HashMap<>();
+        fetchRoute();
     }
 
-    public void addRoutes(HashMap<String,String> route) {
-        this.route = route;
+    public void fetchRoute() {
+        route = new HashMap<>() {{
+            put("add-library", "addLibrary");
+        }};
     }
 
     public HashMap<String, String> getRoute() {
