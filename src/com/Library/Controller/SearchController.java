@@ -66,7 +66,7 @@ public class SearchController extends BaseController {
             str.append(temp);
             str.append("|");
         }
-        if (str.length() != 0) {
+        if (!str.isEmpty()) {
             str.deleteCharAt(str.length() - 1);
         }
         return new String(str);

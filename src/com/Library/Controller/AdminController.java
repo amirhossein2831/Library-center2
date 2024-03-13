@@ -40,8 +40,7 @@ public class AdminController extends BaseController {
     }
 
     private String checkUser(User user) {
-        if (user instanceof Manager) {
-            Manager manager = (Manager) user;
+        if (user instanceof Manager manager) {
             if (LibraryCenter.getUsers().get(manager.getId()) != null) {
                 return "duplicate-id";
             }

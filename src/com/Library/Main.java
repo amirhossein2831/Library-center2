@@ -20,9 +20,8 @@ public class Main {
                 System.out.println(e.getMessage());
             } catch (InvocationTargetException e) {
                 Throwable cause = e.getCause();
-                if (cause instanceof RuntimeException) {
-                        RuntimeException originalRuntimeException = (RuntimeException) cause;
-                        System.out.println(originalRuntimeException.getMessage());
+                if (cause instanceof RuntimeException originalRuntimeException) {
+                    System.out.println(originalRuntimeException.getMessage());
                 }
             } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
                      IllegalAccessException e) {
