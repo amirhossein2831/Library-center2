@@ -38,12 +38,12 @@ public class Route {
     public void fetchRoute() {
         // Define all Route here
         route = new HashMap<>() {{
-            put("add-library", "addLibrary");
-            put("add-category", "addCategory");
-            put("add-student", "addStudent");
-            put("add-staff", "addStaff");
-            put("add-manager", "addManager");
-            put("remove-user", "removeUser");
+            put("add-library", "com.Library.Controller.AdminController@addLibrary");
+            put("add-category", "com.Library.Controller.AdminController@addCategory");
+            put("add-student", "com.Library.Controller.AdminController@addStudent");
+            put("add-staff", "com.Library.Controller.AdminController@addStaff");
+            put("add-manager", "com.Library.Controller.AdminController@addManager");
+            put("remove-user", "com.Library.Controller.AdminController@removeUser");
             put("add-book", "addBook");
             put("add-thesis", "addThesis");
             put("add-ganjineh-book", "addGanjine");
