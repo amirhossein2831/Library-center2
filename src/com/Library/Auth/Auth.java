@@ -38,4 +38,18 @@ public class Auth {
             throw new PermissionDeniedException();
         }
     }
+
+    public static void featureAuth(String id, String pass,String libraryId, String resourceId) {
+        if (LibraryCenter.getUsers().get(id) == null) {
+            throw new NotFoundException();
+        } else if (!LibraryCenter.getUsers().get(id).getPass().equals(pass)) {
+            throw new InvalidPassException();
+        }
+        if (LibraryCenter.getLibraries().get(libraryId) == null) {
+            throw new NotFoundException();
+        }
+        if (LibraryCenter.getLibraries().get(libraryId).getResource(resourceId) == null) {
+            throw new NotFoundException();
+        }
+    }
 }
