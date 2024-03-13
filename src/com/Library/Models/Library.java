@@ -219,10 +219,10 @@ public class Library {
         return debt;
     }
 
-    public StringBuilder reportPassedDeadLine(Date date, HashMap<String, User> users) {
+    public String reportPassedDeadLine(Date date, HashMap<String, User> users) {
         HashSet<String> values = hasDelay(date, users);
         if (values == null) {
-            return new StringBuilder("none");
+            return "none";
         }
         ArrayList<String> hold = new ArrayList<>(values);
         StringBuilder str = new StringBuilder();
@@ -234,7 +234,7 @@ public class Library {
         if (str.length() != 0) {
             str.deleteCharAt(str.length() - 1);
         }
-        return str;
+        return new String(str);
     }
     public String libraryReport() {
         int bookNum = 0, thesisNum = 0, ganjineNum = 0, sellingBookNum = 0, borrowedBook = 0, borrowedThesis = 0;

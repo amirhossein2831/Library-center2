@@ -33,6 +33,7 @@ public class Route {
             Object res = adminReflect.call(Class.forName(className), method, args);
             System.out.println((String) res);
         } else if (className.contains("Manager")) {
+            Auth.managerAuth(args[0],args[1]);
             Object res =managerReflect.call(Class.forName(className), method, args);
             System.out.println((String) res);
         }
