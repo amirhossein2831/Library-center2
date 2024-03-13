@@ -3,6 +3,7 @@ package com.Library.Compunent.Router;
 import com.Library.Compunent.Reflection.Reflection;
 import com.Library.Controller.AdminController;
 import com.Library.Controller.Controller;
+import com.Library.Controller.ManagerController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class Route {
 
     public Route() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         adminReflect = new Reflection(AdminController.class);
-        managerReflect = new Reflection(Controller.class);
+        managerReflect = new Reflection(ManagerController.class);
         fetchRoute();
     }
 
@@ -44,11 +45,11 @@ public class Route {
             put("add-staff", "com.Library.Controller.AdminController@addStaff");
             put("add-manager", "com.Library.Controller.AdminController@addManager");
             put("remove-user", "com.Library.Controller.AdminController@removeUser");
-            put("add-book", "com.Library.Controller.AdminController@addBook");
-            put("add-thesis", "com.Library.Controller.AdminController@addThesis");
-            put("add-ganjineh-book", "com.Library.Controller.AdminController@addGanjine");
-            put("add-selling-book", "com.Library.Controller.AdminController@addSellingBook");
-            put("remove-resource", "com.Library.Controller.AdminController@removeResource");
+            put("add-book", "com.Library.Controller.ManagerController@addBook");
+            put("add-thesis", "com.Library.Controller.ManagerController@addThesis");
+            put("add-ganjineh-book", "com.Library.Controller.ManagerController@addGanjine");
+            put("add-selling-book", "com.Library.Controller.ManagerController@addSellingBook");
+            put("remove-resource", "com.Library.Controller.ManagerController@removeResource");
             put("borrow", "borrow");
             put("return", "returning");
             put("buy", "buy");
