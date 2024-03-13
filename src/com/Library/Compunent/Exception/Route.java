@@ -1,5 +1,9 @@
 package com.Library.Compunent.Exception;
 
+import com.Library.Compunent.Parser.Parser;
+import com.Library.Compunent.Reflection.Reflection;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class Route {
@@ -36,6 +40,20 @@ public class Route {
             put("report-most-popular", "reportMostPopular");
             put("report-sell", "reportSelling");
         }};
+    }
+
+    public void routing(String methodName, String[] args) throws
+            InvocationTargetException,
+            NoSuchMethodException,
+            InstantiationException,
+            IllegalAccessException {
+        if (!route.containsKey(methodName)) {
+            System.out.println("invalid route");
+            return;
+        }
+
+        String method = route.get(methodName);
+        Reflection.call(Parser.class, method, args);
     }
 
     public HashMap<String, String> getRoute() {
