@@ -14,36 +14,8 @@ import com.Library.Compunent.Rule.Rule;
 
 import java.util.*;
 
-public class ManagerController extends BaseController{
-    public String addResource(String managerId, String managerPass, Resource resource) {
-        Rule rule = new Rule(managerId, managerPass, resource.getLibraryId(), users, libraries);
-        return checkResource(resource);
-    }
-    private String checkResource(Resource resource) {
-        Library library = libraries.get(resource.getLibraryId());
-        if (library == null) {
-            return "not-found";
-        }
-        if (library.getResources().get(resource.getId()) != null) {
-            return "duplicate-id";
-        }
-        if (!resource.getCategoryId().equals("null") && categories.get(resource.getCategoryId()) == null) {
-            return "not-found";
-        }
-        library.getResources().put(resource.getId(), resource);
-        return "success";
-    }
-    public String removeResource(String managerId, String managerPass, String resourceID, String libraryId) {
-        Rule rule = new Rule(managerId, managerPass,libraryId, users, libraries);
-        if (rule.getLibrary().getResources().get(resourceID) == null) {
-            return "not-found";
-        }
-        if (rule.getLibrary().getBorrows().get(resourceID) != null) {
-            return "not-allowed";
-        }
-        rule.getLibrary().getResources().remove(resourceID);
-        return "success";
-    }
+public class Center extends BaseController{
+
 
     private boolean checkDelay(Borrow borrow, Resource resource, User user) {
         for (Library library : libraries.values()) {
@@ -59,7 +31,7 @@ public class ManagerController extends BaseController{
             return "not-allowed";
         }
         if (checkDelay(borrow, rule.getResource(), rule.getUser())) {
-            return "not-allowed";                               //the user has delay
+            return "not-allowed";
         }
         if (!rule.getLibrary().borrow(borrow, countBorrow(borrow.getUserId()), rule.getUser(), rule.getResource())) {
             return "not-allowed";

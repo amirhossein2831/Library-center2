@@ -1,16 +1,11 @@
 package com.Library.Controller;
 
 import com.Library.Models.Borrow;
-import com.Library.Models.Category;
-import com.Library.Models.Library;
 import com.Library.Models.Resources.Book;
 import com.Library.Models.Resources.GanjineBook;
 import com.Library.Models.Resources.SellingBook;
 import com.Library.Models.Resources.Thesis;
-import com.Library.Models.Users.Manager;
-import com.Library.Models.Users.Professor;
-import com.Library.Models.Users.Staff;
-import com.Library.Models.Users.Student;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,31 +15,6 @@ public class Controller {
 
     public Controller() {
         center = new Center();
-    }
-
-
-    public void addBook(String[] args) {
-        Book book = new Book(args[2], args[3], args[4], args[8], args[9], args[5], Integer.parseInt(args[7]), args[6]);
-        System.out.println(center.addResource(args[0], args[1], book));
-    }
-
-    public void addThesis(String[] args) {
-        Thesis thesis = new Thesis(args[2], args[3], args[4], args[7], args[8], args[4], args[6]);
-        System.out.println(center.addResource(args[0], args[1], thesis));
-    }
-
-    public void addGanjine(String[] args) {
-        GanjineBook ganjineBook = new GanjineBook(args[2], args[3], args[4], args[8], args[9], args[5], args[6], args[7]);
-        System.out.println(center.addResource(args[0], args[1], ganjineBook));
-    }
-
-    public void addSellingBook(String[] args) {
-        SellingBook sellingBook = new SellingBook(args[2], args[3], args[4], args[10], args[11], args[5], Integer.parseInt(args[7]), args[6], args[8], args[9]);
-        System.out.println(center.addResource(args[0], args[1], sellingBook));
-    }
-
-    public void removeResource(String[] args) {
-        System.out.println(center.removeResource(args[0], args[1], args[2], args[3]));
     }
 
     public void borrow(String[] args) throws ParseException {
