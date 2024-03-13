@@ -1,7 +1,5 @@
 package com.Library.Compunent.Reflection;
 
-import com.Library.Controller.Controller;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -16,8 +14,8 @@ public class Reflection {
         this.object = className.getDeclaredConstructor().newInstance();
     }
 
-    public void call(Class<?> className,String methodName, String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public Object call(Class<?> className, String methodName, String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = className.getDeclaredMethod(methodName, String[].class);
-        method.invoke(this.object, (Object) args);
+        return method.invoke(this.object, (Object) args);
     }
 }
