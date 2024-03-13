@@ -1,6 +1,5 @@
 package com.Library.Controller;
 
-import com.Library.Compunent.Rule.Rule;
 import com.Library.Models.Category;
 import com.Library.Models.Library;
 import com.Library.Models.LibraryCenter;
@@ -10,7 +9,6 @@ public class AdminController extends BaseController {
 
     public String addLibrary(String[] args) {
         Library library = new Library(args[2], args[3], args[4], Integer.parseInt(args[5]), args[6]);
-        Rule rule = new Rule(args[0], args[1], LibraryCenter.getUsers());
         if (LibraryCenter.getLibraries().get(library.getId()) != null) {
             return "duplicate-id";
         }
@@ -20,7 +18,6 @@ public class AdminController extends BaseController {
 
     public String addCategory(String[] args) {
         Category category = new Category(args[2], args[3], args[4]);
-        Rule rule = new Rule(args[0], args[1], LibraryCenter.getUsers());
         if (LibraryCenter.getCategories().get(category.getId()) != null) {
             return "duplicate-id";
         }
@@ -37,10 +34,8 @@ public class AdminController extends BaseController {
         return "success";
     }
 
-
     public String addStudent(String[] args) {
         Student student = new Student(args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-        Rule rule = new Rule(args[0], args[1], LibraryCenter.getUsers());
         return checkUser(student);
     }
 
@@ -66,23 +61,19 @@ public class AdminController extends BaseController {
     public String addStaff(String[] args) {
         if (args[9].equals("staff")) {
             Staff staff = new Staff(args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-            Rule rule = new Rule(args[0], args[1], LibraryCenter.getUsers());
             return checkUser(staff);
         } else {
             Professor professor = new Professor(args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-            Rule rule = new Rule(args[0], args[1], LibraryCenter.getUsers());
             return checkUser(professor);
         }
     }
 
     public String addManager(String[] args) {
         Manager manager = new Manager(args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
-        Rule rule = new Rule(args[0], args[1], LibraryCenter.getUsers());
         return checkUser(manager);
     }
 
     public String removeUser(String[] args) {
-        Rule rule = new Rule(args[0], args[1], LibraryCenter.getUsers());
         if (LibraryCenter.getUsers().get(args[2]) == null) {
             return "not-found";
         }

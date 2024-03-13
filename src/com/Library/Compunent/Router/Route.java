@@ -1,5 +1,6 @@
 package com.Library.Compunent.Router;
 
+import com.Library.Auth.Auth;
 import com.Library.Compunent.Reflection.Reflection;
 import com.Library.Controller.AdminController;
 import com.Library.Controller.Controller;
@@ -28,6 +29,7 @@ public class Route {
         String className = route.get(path).split("@")[0];
         String method = route.get(path).split("@")[1];
         if (className.contains("Admin")) {
+            Auth.adminAuth(args[0],args[1]);
             Object res = adminReflect.call(Class.forName(className), method, args);
             System.out.println((String) res);
         } else if (className.contains("Manager")) {
