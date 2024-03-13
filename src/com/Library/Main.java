@@ -10,7 +10,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Scanner scanner = new Scanner(System.in);
         Parser parser = new Parser();
         String input = scanner.nextLine();
@@ -19,8 +19,7 @@ public class Main {
                 parser.parsCommand(input);
             } catch (NotFoundException | InvalidPassException | PermissionDeniedException e) {
                 System.out.println(e.getMessage());
-            } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException |
-                     InstantiationException | IllegalAccessException e) {
+            } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
             input = scanner.nextLine();
