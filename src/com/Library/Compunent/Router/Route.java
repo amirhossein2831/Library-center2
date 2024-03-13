@@ -48,7 +48,7 @@ public class Route {
             put("add-book", "com.Library.Controller.ManagerController@addBook");
             put("add-thesis", "com.Library.Controller.ManagerController@addThesis");
             put("add-ganjineh-book", "com.Library.Controller.ManagerController@addGanjine");
-            put("add-selling-book", "com.Library.Controller.ManagerController@addSellingBook");
+            put("add-seeling-book", "com.Library.Controller.ManagerController@addSellingBook");
             put("remove-resource", "com.Library.Controller.ManagerController@removeResource");
             put("borrow", "borrow");
             put("return", "returning");
