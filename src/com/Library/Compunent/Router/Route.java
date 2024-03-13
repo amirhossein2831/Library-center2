@@ -1,7 +1,8 @@
-package com.Library.Compunent.Exception;
+package com.Library.Compunent.Router;
 
 import com.Library.Compunent.Parser.Parser;
 import com.Library.Compunent.Reflection.Reflection;
+import com.Library.Controller.Controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class Route {
         }
 
         String method = route.get(methodName);
-        Reflection.call(Parser.class, method, args);
+        Reflection.call(Controller.class, method, args);
     }
 
     public HashMap<String, String> getRoute() {
