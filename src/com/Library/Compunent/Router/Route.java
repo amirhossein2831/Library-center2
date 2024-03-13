@@ -1,28 +1,38 @@
 package com.Library.Compunent.Router;
 
 import com.Library.Compunent.Reflection.Reflection;
+import com.Library.Controller.AdminController;
 import com.Library.Controller.Controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class Route {
-    private final Reflection controllerReflect;
+    private final Reflection adminReflect;
+    private final Reflection managerReflect;
     private HashMap<String, String> route;
 
     public Route() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        controllerReflect = new Reflection(Controller.class);
+        adminReflect = new Reflection(AdminController.class);
+        managerReflect = new Reflection(Controller.class);
         fetchRoute();
     }
 
-    public void routing(String methodName, String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        if (!route.containsKey(methodName)) {
+    public void routing(String path, String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ClassNotFoundException {
+        if (!route.containsKey(path)) {
             System.out.println("invalid route");
             return;
         }
 
-        String method = route.get(methodName);
-        controllerReflect.call(Controller.class, method, args);
+        String className = route.get(path).split("@")[0];
+        String method = route.get(path).split("@")[1];
+        if (className.contains("Admin")) {
+            Object res = adminReflect.call(Class.forName(className), method, args);
+            System.out.println((String) res);
+        } else if (className.contains("Manager")) {
+            Object res =managerReflect.call(Class.forName(className), method, args);
+            System.out.println((String) res);
+        }
     }
 
     public void fetchRoute() {
