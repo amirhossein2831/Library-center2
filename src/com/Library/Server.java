@@ -4,6 +4,7 @@ import com.Library.Compunent.Exception.InvalidPassException;
 import com.Library.Compunent.Exception.NotFoundException;
 import com.Library.Compunent.Exception.PermissionDeniedException;
 import com.Library.Compunent.Parser.Parser;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
@@ -21,8 +22,13 @@ public class Server {
         while (!input.equals("finish")) {
             try {
                 parser.parsCommand(input);
-            } catch (NotFoundException | InvalidPassException | PermissionDeniedException |ClassNotFoundException | NoSuchMethodException | InstantiationException |
-                     IllegalAccessException  e) {
+            } catch (NotFoundException |
+                     InvalidPassException |
+                     PermissionDeniedException |
+                     ClassNotFoundException |
+                     NoSuchMethodException |
+                     InstantiationException |
+                     IllegalAccessException e) {
                 System.out.println(e.getMessage());
             } catch (InvocationTargetException e) {
                 Throwable cause = e.getCause();
