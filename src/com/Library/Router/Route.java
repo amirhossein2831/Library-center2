@@ -1,4 +1,4 @@
-package com.Library.Compunent.Router;
+package com.Library.Router;
 
 import com.Library.Auth.Auth;
 import com.Library.Compunent.Reflection.Reflection;
@@ -50,7 +50,7 @@ public class Route {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             ClassLoader classLoader = getClass().getClassLoader();
-            File jsonFile = new File(Objects.requireNonNull(classLoader.getResource("com/Library/routes.json")).getFile());
+            File jsonFile = new File(Objects.requireNonNull(classLoader.getResource("com/Library/Router/routes.json")).getFile());
             JsonNode rootNode = objectMapper.readTree(jsonFile);
 
             if (rootNode.isArray()) {
