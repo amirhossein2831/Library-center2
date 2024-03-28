@@ -56,9 +56,7 @@ public abstract class Resource {
     }
 
     public StringBuilder search(String key) {
-        if (subject.toUpperCase().contains(key.toUpperCase())) {
-            return new StringBuilder(this.getId());
-        } else if (authorName.toUpperCase().contains(key.toUpperCase())) {
+        if (subject.toUpperCase().contains(key.toUpperCase()) || authorName.toUpperCase().contains(key.toUpperCase()) ) {
             return new StringBuilder(this.getId());
         }
         return new StringBuilder();
