@@ -1,35 +1,41 @@
 package com.Library.Compunent.Router;
 
-import com.Library.Auth.AdminAuth;
 import com.Library.Auth.Auth;
-import com.Library.Auth.FeatureAuth;
-import com.Library.Auth.ManagerAuth;
 import com.Library.Compunent.Reflection.Reflection;
-import com.Library.Controller.AdminController;
-import com.Library.Controller.FeatureController;
-import com.Library.Controller.ManagerController;
-import com.Library.Controller.SearchController;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Objects;
 
 public class Route {
+    private static Route instance;
     private final ArrayList<SubRoute> routes;
 
-    public Route() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private Route() {
         routes = new ArrayList<>();
-        fetchRoute();
+    }
+
+    public static Route getInstance() {
+        if (instance == null) {
+            instance = new Route();
+        }
+        return instance;
     }
 
     public void registerRoute(Class<?> controllerClass, Auth auth, HashMap<String, String> routes) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        SubRoute subRoute = new SubRoute(new Reflection(controllerClass), routes,auth);
+        SubRoute subRoute = new SubRoute(new Reflection(controllerClass), routes, auth);
         this.routes.add(subRoute);
     }
 
     public void routing(String path, String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         for (SubRoute sb : routes) {
-            if (sb.getRoutes().containsKey(path)){
+            if (sb.getRoutes().containsKey(path)) {
                 String methodName = sb.getRoutes().get(path);
                 if (sb.getAuth() != null) {
                     sb.getAuth().authenticate(args);
@@ -40,38 +46,44 @@ public class Route {
         }
     }
 
-    private void fetchRoute() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        registerRoute(AdminController.class, new AdminAuth(), new HashMap<>() {{
-            put("add-library", "addLibrary");
-            put("add-category", "addCategory");
-            put("add-student", "addStudent");
-            put("add-staff", "addStaff");
-            put("add-manager", "addManager");
-            put("remove-user", "removeUser");
-            put("report-penalties-sum", "reportPenalties");
-        }});
-        registerRoute(ManagerController.class,new ManagerAuth(), new HashMap<>() {{
-            put("add-book", "addBook");
-            put("add-thesis", "addThesis");
-            put("add-ganjineh-book", "addGanjine");
-            put("add-selling-book", "addSellingBook");
-            put("remove-resource", "removeResource");
-            put("report-passed-deadline", "reportPassedDeadLine");
-            put("library-report", "libraryReport");
-            put("category-report", "categoryReport");
-            put("report-most-popular", "reportMostPopular");
-            put("report-sell", "reportSelling");
-        }});
-        registerRoute(FeatureController.class,new FeatureAuth(), new HashMap<>() {{
-            put("borrow", "borrow");
-            put("return", "returning");
-            put("buy", "buy");
-            put("read", "read");
-            put("add-comment", "addComment");
-        }});
-        registerRoute(SearchController.class, null, new HashMap<>() {{
-            put("search", "search");
-            put("search-user", "searchUser");
-        }});
+    public void extractRoute() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ClassLoader classLoader = getClass().getClassLoader();
+            File jsonFile = new File(Objects.requireNonNull(classLoader.getResource("com/Library/routes.json")).getFile());
+            JsonNode rootNode = objectMapper.readTree(jsonFile);
+
+            if (rootNode.isArray()) {
+                Iterator<JsonNode> routesIterator = rootNode.elements();
+                while (routesIterator.hasNext()) {
+                    JsonNode routeNode = routesIterator.next();
+                    String controller = routeNode.get("Controller").asText();
+                    String auth = routeNode.get("Auth").asText();
+                    JsonNode methodNode = routeNode.get("Method");
+
+                    HashMap<String, String> methods = new HashMap<>();
+                    methodNode.fields().forEachRemaining(entry -> {
+                        methods.put(entry.getKey(), entry.getValue().asText());
+                    });
+
+                    generateRegistrationCode(controller, auth, methods);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
+    private void generateRegistrationCode(String controller, String auth, HashMap<String, String> methods) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        Class<?> controllerClass = Class.forName(controller);
+        if (auth.isEmpty()) {
+            this.registerRoute(controllerClass, null, methods);
+            return;
+        }
+        Class<?> authClass = Class.forName(auth);
+        Object authInstance = authClass.getDeclaredConstructor().newInstance();
+        this.registerRoute(controllerClass, (Auth) authInstance, methods);
+    }
+
 }
