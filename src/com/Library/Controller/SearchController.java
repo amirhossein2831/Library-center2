@@ -4,6 +4,7 @@ import com.Library.Models.Interface.SearchUser;
 import com.Library.Models.Library;
 import com.Library.Models.LibraryCenter;
 import com.Library.Models.Resources.Resource;
+import com.Library.Models.Users.Admin;
 import com.Library.Models.Users.Student;
 import com.Library.Models.Users.User;
 
@@ -15,13 +16,14 @@ import java.util.HashSet;
 public class SearchController extends BaseController {
 
     public String search(String[] args) {
+
         String key = args[0];
         StringBuilder str = new StringBuilder();
         HashSet<StringBuilder> values = new HashSet<>();
         for (Library library : LibraryCenter.getLibraries().values()) {
             for (Resource resource : library.getResources().values()) {
                 StringBuilder s = resource.search(key);
-                if (s.length() != 0) {
+                if (!s.isEmpty()) {
                     values.add(resource.search(key));
                 }
             }
@@ -32,7 +34,7 @@ public class SearchController extends BaseController {
             str.append(temp);
             str.append("|");
         }
-        if (str.length() != 0) {
+        if (!str.isEmpty()) {
             str.deleteCharAt(str.length() - 1);
             return new String(str);
         }

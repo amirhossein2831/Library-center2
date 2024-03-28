@@ -99,9 +99,6 @@ public class FeatureController extends BaseController {
         User user = LibraryCenter.getUsers().get(args[0]);
         Library library = LibraryCenter.getLibraries().get(args[2]);
         Resource resource = library.getResource(args[3]);
-        if (user instanceof Manager) {
-            return "permission-denied";
-        }
         if (!(user instanceof Student || user instanceof Professor)) {
             return "permission-denied";
         }
