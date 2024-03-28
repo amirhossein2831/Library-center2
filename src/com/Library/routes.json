@@ -1,0 +1,50 @@
+[
+  {
+    "Controller": "com.Library.Controller.AdminController",
+    "Auth": "com.Library.Auth.AdminAuth",
+    "Method": {
+      "add-library": "addLibrary",
+      "add-category": "addCategory",
+      "add-student": "addStudent",
+      "add-staff": "addStaff",
+      "add-manager": "addManager",
+      "remove-user": "removeUser",
+      "report-penalties-sum": "reportPenalties"
+    }
+  },
+  {
+    "Controller": "com.Library.Controller.ManagerController",
+    "Auth": "com.Library.Auth.ManagerAuth",
+    "Method": {
+      "add-book": "addBook",
+      "add-thesis": "addThesis",
+      "add-ganjineh-book": "addGanjine",
+      "add-selling-book": "addSellingBook",
+      "remove-resource": "removeResource",
+      "report-passed-deadline": "reportPassedDeadLine",
+      "library-report": "libraryReport",
+      "category-report": "categoryReport",
+      "report-most-popular": "reportMostPopular",
+      "report-sell": "reportSelling"
+    }
+  },
+  {
+    "Controller": "com.Library.Controller.FeatureController",
+    "Auth": "com.Library.Auth.FeatureAuth",
+    "Method": {
+      "borrow": "borrow",
+      "return": "returning",
+      "buy": "buy",
+      "read": "read",
+      "add-comment": "addComment"
+    }
+  },
+  {
+    "Controller": "com.Library.Controller.SearchController",
+    "Auth": "",
+    "Method": {
+      "search": "search",
+      "search-user": "searchUser"
+    }
+  }
+]
