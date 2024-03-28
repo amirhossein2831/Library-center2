@@ -12,7 +12,7 @@ public class Server {
     private final Parser parser;
     private final Scanner scanner;
 
-    public Server() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public Server() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         this.parser = new Parser();
         this.scanner = new Scanner(System.in);
     }

@@ -8,8 +8,9 @@ public class Parser {
 
     private final Route router;
 
-    public Parser() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        router = new Route();
+    public Parser() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+        router = Route.getInstance();
+        router.extractRoute();
     }
 
     public void parsCommand(String input) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
