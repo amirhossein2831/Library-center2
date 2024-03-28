@@ -4,8 +4,6 @@ import com.Library.Compunent.Exception.InvalidPassException;
 import com.Library.Compunent.Exception.NotFoundException;
 import com.Library.Models.LibraryCenter;
 
-import java.util.HashMap;
-
 public class FeatureAuth extends Auth{
     @Override
     public void authenticate(String ...args) {
