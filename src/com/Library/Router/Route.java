@@ -66,7 +66,7 @@ public class Route {
                         methods.put(entry.getKey(), entry.getValue().asText());
                     });
 
-                    generateRegistrationCode(controller, auth, methods);
+                    createSubRoute(controller, auth, methods);
                 }
             }
         } catch (IOException e) {
@@ -75,15 +75,10 @@ public class Route {
 
     }
 
-    private void generateRegistrationCode(String controller, String auth, HashMap<String, String> methods) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    private void createSubRoute(String controller, String auth, HashMap<String, String> methods) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         Class<?> controllerClass = Class.forName(controller);
-        if (auth.isEmpty()) {
-            this.registerRoute(controllerClass, null, methods);
-            return;
-        }
-        Class<?> authClass = Class.forName(auth);
-        Object authInstance = authClass.getDeclaredConstructor().newInstance();
-        this.registerRoute(controllerClass, (Auth) authInstance, methods);
+        Auth authInstance = auth.isEmpty() ? null : (Auth) Class.forName(auth).getDeclaredConstructor().newInstance();
+        this.registerRoute(controllerClass, authInstance, methods);
     }
 
 }
