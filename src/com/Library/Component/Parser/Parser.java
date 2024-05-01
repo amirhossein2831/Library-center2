@@ -1,4 +1,4 @@
-package com.Library.Compunent.Parser;
+package com.Library.Component.Parser;
 
 import com.Library.Router.Route;
 

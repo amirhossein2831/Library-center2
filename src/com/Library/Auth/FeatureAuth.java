@@ -1,7 +1,7 @@
 package com.Library.Auth;
 
-import com.Library.Compunent.Exception.InvalidPassException;
-import com.Library.Compunent.Exception.NotFoundException;
+import com.Library.Component.Exception.InvalidPassException;
+import com.Library.Component.Exception.NotFoundException;
 import com.Library.Models.LibraryCenter;
 
 public class FeatureAuth extends Auth{

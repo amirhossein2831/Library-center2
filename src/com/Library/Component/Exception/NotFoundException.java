@@ -1,4 +1,4 @@
-package com.Library.Compunent.Exception;
+package com.Library.Component.Exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException() {

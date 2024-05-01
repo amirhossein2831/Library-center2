@@ -1,8 +1,8 @@
 package com.Library.Auth;
 
-import com.Library.Compunent.Exception.InvalidPassException;
-import com.Library.Compunent.Exception.NotFoundException;
-import com.Library.Compunent.Exception.PermissionDeniedException;
+import com.Library.Component.Exception.InvalidPassException;
+import com.Library.Component.Exception.NotFoundException;
+import com.Library.Component.Exception.PermissionDeniedException;
 import com.Library.Models.LibraryCenter;
 import com.Library.Models.Users.Admin;
 

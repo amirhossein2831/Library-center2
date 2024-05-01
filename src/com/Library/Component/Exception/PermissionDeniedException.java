@@ -1,4 +1,4 @@
-package com.Library.Compunent.Exception;
+package com.Library.Component.Exception;
 
 public class PermissionDeniedException extends RuntimeException {
     public PermissionDeniedException() {

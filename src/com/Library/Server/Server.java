@@ -1,9 +1,9 @@
 package com.Library.Server;
 
-import com.Library.Compunent.Exception.InvalidPassException;
-import com.Library.Compunent.Exception.NotFoundException;
-import com.Library.Compunent.Exception.PermissionDeniedException;
-import com.Library.Compunent.Parser.Parser;
+import com.Library.Component.Exception.InvalidPassException;
+import com.Library.Component.Exception.NotFoundException;
+import com.Library.Component.Exception.PermissionDeniedException;
+import com.Library.Component.Parser.Parser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
